@@ -213,38 +213,44 @@ main{
     margin-bottom: 4px;
 }
 /* ================= 좌석 지정 그리드 배치 ================= */
+/* 💡 화면 너비에 맞춰 7칸 레이아웃을 비율로 자동 분할 */
 .tileGridRow {
-    display:grid;
-    grid-template-columns: 80px 80px 80px 40px 80px 80px 80px;
-    justify-content: flex-start;
+    display: grid;
+    /* 좌석 3칸(1fr씩) + 통로(0.5fr) + 좌석 3칸(1fr씩) 비율 설정 */
+    grid-template-columns: repeat(3, 1fr) 0.4fr repeat(3, 1fr);
+    justify-content: center;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 8px; /* 타일 간격 간격을 조금 줄여 모바일 대응 */
+    margin-bottom: 12px;
+    width: 100%;
 }
 .tileGridRow:last-child {
     margin-bottom: 0;
 }
+/* 통로 영역 비율 맞춤 */
 .aisleSpace {
-    width: 40px;
+    width: 100%;
 }
+/* 빈 공간 타일 비율 맞춤 */
 .emptySpace {
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 가로세로 1:1 비율 유지 */
 }
-.seatTile{
-    width:80px;
-    height:80px;
-    border-radius:16px;
-    background:#2196f3;
-    color:white;
-    border:none;
-    cursor:pointer;
-    transition:.18s;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    box-shadow:0 4px 12px rgba(0,0,0,.15);
+/* 💡 타일 자체의 크기를 고정(80px)하지 않고, 늘어나게 설정 */
+.seatTile {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 가로세로 정정사각형 유지 */
+    border-radius: 12px;
+    background: #2196f3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: .18s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,.1);
 }
 /* 💺 나 ❌ 아이콘 크기 확대 */
 .seatTile .icon {
@@ -330,6 +336,7 @@ main{
 }
 
 /* 📱 스마트폰/모바일 환경 최적화 (왼쪽 캐빈 숨기기) */
+/* 📱 스마트폰/모바일 환경 최적화 (레이아웃 및 글자 크기 반응형) */
 @media (max-width: 1024px) {
     body { 
         position: fixed; 
@@ -341,17 +348,28 @@ main{
         flex-direction: column; 
         height: calc(100vh - 80px); 
     }
-    /* 💡 모바일에서는 왼쪽 캐빈 레이아웃을 아예 숨깁니다 */
     .left { 
         display: none !important; 
     }
-    /* 오른쪽 유료석 선택 화면만 꽉 차게 보여주고 부드러운 스크롤 적용 */
     .right { 
         width: 100%; 
         height: 100%; 
         overflow-y: auto; 
         -webkit-overflow-scrolling: touch; 
+        padding: 12px; /* 여백 최적화 */
+    }
+    .card {
         padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 14px;
+    }
+    /* 💡 모바일 화면 크기에 맞춰 타일 속 글자 크기를 최적화 */
+    .seatTile .icon {
+        font-size: 20px; /* 모바일 전용 크기 */
+    }
+    .seatTile .seatNo {
+        font-size: 15px; /* 모바일 전용 크기 */
+        font-weight: bold;
     }
 }
 </style>
