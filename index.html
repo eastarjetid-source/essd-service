@@ -144,7 +144,6 @@ main{
     position: relative;
 }
 
-/* 1, 2, 15, 16열의 과도한 색상을 제거하고 깔끔한 회색 톤으로 통일 */
 .rowNo{
     text-align:center;
     font-size:12px;
@@ -156,7 +155,6 @@ main{
     position: relative;
 }
 
-/* ⚠️ 비상구 게이트 (왼쪽 탈출방향 화살표 좌측으로 정상화 수정) */
 .exit-gate {
     position: absolute;
     top: 50%;
@@ -167,8 +165,8 @@ main{
     white-space: nowrap;
     pointer-events: none;
 }
-.exit-gate.left-gate { left: -65px; } /* 왼쪽 도어: 바깥 방향 화살표 */
-.exit-gate.right-gate { right: -65px; } /* 오른쪽 도어: 바깥 방향 화살표 */
+.exit-gate.left-gate { left: -65px; } 
+.exit-gate.right-gate { right: -65px; } 
 
 .cabinSeat{
     width:28px;
@@ -179,7 +177,8 @@ main{
     cursor: pointer;
 }
 .cabinSeat.sale{
-    background:#2b6cb0; /* 기내의 선택가능 좌석도 편안한 블루 톤으로 매칭 */
+    /* 제안해주신 스카이 블루 적용 */
+    background: rgb(126, 206, 244); 
 }
 .cabinSeat.sold{
     background:white;
@@ -211,10 +210,10 @@ main{
 }
 .card{
     background: #ffffff; 
-    border: 1px solid rgb(200, 200, 200);
+    border: 1px solid rgb(215, 225, 230);
     border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -224,7 +223,8 @@ main{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    border-bottom: 3px solid #1a365d; /* 강한 레드 대신 세련된 딥 네이비 라인 */
+    /* 제안해주신 스카이 블루 칼라 라인 매칭 */
+    border-bottom: 3px solid rgb(126, 206, 244); 
     padding-bottom: 10px;
 }
 .titleArea {
@@ -233,7 +233,7 @@ main{
     gap: 12px;
 }
 .cardHeader h2{
-    color:#1a365d;
+    color: rgb(48, 58, 60);
     font-size: 24px;
     font-weight: 900;
 }
@@ -247,11 +247,11 @@ main{
     border: 1px solid rgb(192, 206, 209);
 }
 .priceBadge span {
-    color: #2b6cb0;
+    color: rgb(30, 144, 255);
 }
 .count{
-    background:#1a365d;
-    color:white;
+    background: rgb(126, 206, 244);
+    color: rgb(48, 58, 60); /* 밝은 배경에 맞춰 글씨 어둡게 변경 */
     padding:6px 16px;
     border-radius:20px;
     font-weight:bold;
@@ -309,16 +309,16 @@ main{
     flex: 1;
 }
 
-/* 💺 좌석 타일: 눈이 편안하고 신뢰감을 주는 Deep Navy & Blue 계열 변경 */
+/* 💺 좌석 타일: 제안해주신 R 126 G 206 B 244 컬러 커스텀 셋업 */
 .seatTile {
     flex: 1;
     max-width: 90px;
     aspect-ratio: 1.15 / 1;
     max-height: 58px;
     border-radius: 6px;
-    background: #2b6cb0; /* 스카이 블루 톤 */
-    color: white;
-    border: 1px solid #1a365d;
+    background: rgb(126, 206, 244); 
+    color: rgb(48, 58, 60); /* 텍스트 시인성을 확보하기 위해 어두운 그레이 매칭 */
+    border: 1px solid rgb(96, 176, 214);
     cursor: pointer;
     transition: transform 0.1s ease, background 0.15s;
     display: flex;
@@ -326,7 +326,7 @@ main{
     justify-content: center;
     align-items: center;
     position: relative;
-    box-shadow: 0 2px 6px rgba(43,108,176,0.15);
+    box-shadow: 0 2px 6px rgba(126,206,244,0.2);
 }
 .seatTile:active { transform: scale(0.94); }
 .seatTile .icon { font-size: 14px; margin-bottom: 2px; opacity: 0.9; }
@@ -359,11 +359,11 @@ main{
     height:60px;
     border-radius:50%;
     border:none;
-    background:#1a365d;
-    color:white;
+    background: rgb(126, 206, 244);
+    color: rgb(48, 58, 60);
     font-size:28px;
     cursor:pointer;
-    box-shadow:0 6px 15px rgba(0,0,0,.2);
+    box-shadow:0 6px 15px rgba(0,0,0,.15);
     z-index:999;
 }
 #panel {
@@ -380,7 +380,7 @@ main{
     z-index:998;
 }
 #panel.open{ right:0; }
-#panel h2{ color:#1a365d; margin-bottom:20px; }
+#panel h2{ color: rgb(48, 58, 60); margin-bottom:20px; }
 #panel label{ display:block; margin-bottom:18px; font-weight:bold; }
 #panel input{ width:100%; margin-top:8px; padding:10px; border-radius:8px; border:1px solid rgb(158, 162, 161); }
 #panel button{ width:100%; margin-top:15px; padding:12px; border:none; border-radius:10px; color:white; font-size:16px; cursor:pointer; }
@@ -549,7 +549,6 @@ function drawCabin(){
             }
         }
 
-        // ⚠️ 비상구 방향 표기 수정 (왼쪽 탈출구는 바깥방향인 왼쪽 화살표 지향)
         if(row === 15 || row === 16) {
             const leftGate = document.createElement("div");
             leftGate.className = "exit-gate left-gate";
