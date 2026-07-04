@@ -13,9 +13,7 @@
     -webkit-tap-highlight-color: transparent;
 }
 body{
-    /* 회색 배경을 없애고 화사하고 깔끔한 화이트 바탕 적용 */
     background:#ffffff;
-    /* Black 95% (R17 / G17 / B17) */
     color:rgb(17, 17, 17);
     overflow:hidden;
     position: fixed;
@@ -25,7 +23,6 @@ body{
 /* ================= HEADER ================= */
 header{
     height:80px;
-    /* Main Color: Red (R210 / G0 / B21) */
     background:rgb(210, 0, 21);
     color:white;
     display:flex;
@@ -72,88 +69,149 @@ main{
     display:flex;
     height:calc(100vh - 80px);
 }
-/* ================= LEFT (Cabin Layout) ================= */
+/* ================= LEFT (Cabin Layout - 비행기 스타일) ================= */
 .left{
-    width:38%;
-    background:#fafafa;
-    padding:25px;
-    /* Light Gray (R192 / G206 / B209)로 경계선 처리 */
+    width:42%;
+    background:#f4f7f9;
+    padding:30px 20px;
     border-right:1px solid rgb(192, 192, 192);
     overflow:auto;
     -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .left h2{
     color:rgb(210, 0, 21);
     text-align:center;
-    margin-bottom:20px;
+    margin-bottom:25px;
+    font-size: 20px;
 }
-.nose{
-    text-align:center;
-    font-size:32px;
-    margin-bottom:15px;
-    color:rgb(210, 0, 21);
+
+/* ✈️ 실제 비행기 기체 느낌의 컨테이너 */
+.airplane-body {
+    background: #ffffff;
+    border: 3px solid rgb(158, 162, 161);
+    border-top-left-radius: 120px 200px;
+    border-top-right-radius: 120px 200px;
+    padding: 60px 20px 40px 20px;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
+/* 조종석 윈도우 표현 */
+.cockpit {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+}
+.cockpit-window {
+    width: 35px;
+    height: 14px;
+    background: rgb(48, 58, 60);
+    border-radius: 3px;
+}
+.cockpit-window.left-w { transform: skewY(-10deg); border-top-left-radius: 8px;}
+.cockpit-window.right-w { transform: skewY(10deg); border-top-right-radius: 8px;}
+
 .headerSeat{
     display:grid;
-    grid-template-columns: 26px 26px 26px 35px 26px 26px 26px;
+    grid-template-columns: 28px 28px 28px 40px 28px 28px 28px;
     justify-content:center;
     gap:6px;
-    margin-bottom:12px;
+    margin-bottom:15px;
     font-weight:bold;
     text-align: center;
-    color:rgb(86, 90, 91);
+    color:rgb(48, 58, 60);
+    font-size: 14px;
 }
+
 #seatMap{
     display:flex;
     flex-direction:column;
-    gap:6px;
+    gap:7px;
+    position: relative;
 }
+
+/* 기내 좌석 행 구조 */
 .cabinRow{
     display:grid;
-    grid-template-columns: 26px 26px 26px 35px 26px 26px 26px;
+    grid-template-columns: 28px 28px 28px 40px 28px 28px 28px;
     justify-content:center;
     align-items:center;
     gap:6px;
+    position: relative;
 }
+
+/* 열 번호 기본 스타일 */
 .rowNo{
     text-align:center;
-    font-size:13px;
+    font-size:12px;
     font-weight:bold;
-    /* Medium Gray (R86 / G90 / B91) */
     color:rgb(86, 90, 91);
     background: #eef2f5;
     border-radius: 4px;
-    padding: 2px 0;
+    padding: 3px 0;
+    position: relative;
 }
+
+/* ⭐ 첫열 & 비상구 직관적 식별용 사이드 라벨 배지 */
+.cabinRow.front-row .rowNo {
+    background: rgb(210, 0, 21);
+    color: white;
+}
+.cabinRow.exit-row .rowNo {
+    background: rgb(142, 1, 20);
+    color: white;
+}
+
+/* ⚠️ 비상구 게이트 그래픽 가이드 */
+.exit-gate {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    font-weight: bold;
+    color: rgb(142, 1, 20);
+    white-space: nowrap;
+    pointer-events: none;
+}
+.exit-gate.left-gate { left: -65px; }
+.exit-gate.right-gate { right: -65px; }
+
+/* 캐빈 좌석 기본 스타일 */
 .cabinSeat{
-    width:26px;
-    height:26px;
+    width:28px;
+    height:28px;
     border-radius:6px;
     background:#e0e0e0;
     transition:.15s;
     cursor: pointer;
 }
 .cabinSeat.sale{
-    /* Main Red */
     background:rgb(210, 0, 21);
 }
 .cabinSeat.sold{
     background:white;
-    /* Dark Red (R142 / G1 / B20) */
     border:2px solid rgb(142, 1, 20);
     position:relative;
 }
 .cabinSeat.sold::before, .cabinSeat.sold::after{
     content:"";
     position:absolute;
-    left:2px;
-    right:2px;
-    top:10px;
+    left:3px;
+    right:3px;
+    top:11px;
     height:2px;
     background:rgb(142, 1, 20);
 }
 .cabinSeat.sold::before{ transform:rotate(45deg); }
 .cabinSeat.sold::after{ transform:rotate(-45deg); }
+
 
 /* ================= RIGHT (Clean White UI) ================= */
 .right{
@@ -167,7 +225,6 @@ main{
 }
 .card{
     background: #ffffff; 
-    /* Material Color: Silver (R140 / G140 / B140) 보더로 깔끔하게 윤곽선 적용 */
     border: 1px solid rgb(140, 140, 140);
     border-radius: 12px;
     padding: 24px;
@@ -181,7 +238,6 @@ main{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    /* Main Red 두꺼운 언더라인 포인트 */
     border-bottom: 3px solid rgb(210, 0, 21); 
     padding-bottom: 10px;
 }
@@ -208,7 +264,6 @@ main{
     color: rgb(210, 0, 21);
 }
 .count{
-    /* Main Red 수량 배지 */
     background:rgb(210, 0, 21);
     color:white;
     padding:6px 16px;
@@ -221,13 +276,11 @@ main{
     background: #f9fbfc;
     border-radius: 8px;
     font-size: 12px;
-    /* Dark Gray */
     color: rgb(48, 58, 60);
     line-height: 1.6;
     border: 1px solid rgb(192, 206, 209);
 }
 .noticeBox .warning-title {
-    /* Dark Red */
     color: rgb(142, 1, 20);
     font-weight: bold;
     margin-bottom: 4px;
@@ -258,13 +311,11 @@ main{
 .benchSide.rightSide {
     justify-content: flex-start;
 }
-/* 가운데 정렬되는 열 번호 스타일 */
 .benchCenterNo {
     width: 50px;
     text-align: center;
     font-size: 26px;
     font-weight: 800;
-    /* Dark Gray 색상으로 시인성 부여 */
     color: rgb(48, 58, 60);
     user-select: none;
 }
@@ -272,14 +323,13 @@ main{
     flex: 1;
 }
 
-/* 💡 이스타항공 스타일 지정좌석 타일 */
+/* 이스타항공 스타일 지정좌석 타일 */
 .seatTile {
     flex: 1;
     max-width: 90px;
     aspect-ratio: 1.15 / 1;
     max-height: 58px;
     border-radius: 6px;
-    /* 구매 가능 좌석: 메인 레드(image_b97471.png 기준 앞자리/비상구 레드 지정 동일) */
     background: rgb(210, 0, 21);
     color: white;
     border: 1px solid rgb(142, 1, 20);
@@ -292,20 +342,10 @@ main{
     position: relative;
     box-shadow: 0 2px 6px rgba(210,0,21,0.15);
 }
-.seatTile:active {
-    transform: scale(0.94);
-}
-.seatTile .icon {
-    font-size: 14px;
-    margin-bottom: 2px;
-    opacity: 0.9;
-}
-.seatTile .seatNo {
-    font-size: 16px;
-    font-weight: 900;
-    line-height: 1;
-}
-/* 판매 완료 좌석: Medium Gray 바탕 및 Dark Red X 마크 */
+.seatTile:active { transform: scale(0.94); }
+.seatTile .icon { font-size: 14px; margin-bottom: 2px; opacity: 0.9; }
+.seatTile .seatNo { font-size: 16px; font-weight: 900; line-height: 1; }
+
 .seatTile.sold {
     background: rgb(158, 162, 161);
     color: rgba(255,255,255,0.3);
@@ -317,7 +357,6 @@ main{
     position: absolute;
     width: 75%;
     height: 3px;
-    /* Dark Red */
     background: rgb(142, 1, 20);
     top: 50%;
     left: 12.5%;
@@ -408,13 +447,23 @@ main{
 <main>
     <div class="left">
         <h2>Cabin Layout</h2>
-        <div class="nose">▲</div>
-        <div class="headerSeat">
-            <div>A</div><div>B</div><div>C</div>
-            <div></div>
-            <div>D</div><div>E</div><div>F</div>
+        
+        <!-- ✈️ 비행기 동체 프레임 시작 -->
+        <div class="airplane-body">
+            <!-- 조종석 창문 구성 -->
+            <div class="cockpit">
+                <div class="cockpit-window left-w"></div>
+                <div class="cockpit-window right-w"></div>
+            </div>
+
+            <div class="headerSeat">
+                <div>A</div><div>B</div><div>C</div>
+                <div></div>
+                <div>D</div><div>E</div><div>F</div>
+            </div>
+            <div id="seatMap"></div>
         </div>
-        <div id="seatMap"></div>
+        <!-- ✈️ 비행기 동체 프레임 끝 -->
     </div>
 
     <div class="right">
@@ -505,17 +554,43 @@ function drawCabin(){
     for(let row=1; row<=32; row++){
         const line = document.createElement("div");
         line.className = "cabinRow";
+        
+        // 시각 구분을 위한 클래스 할당
+        if(row === 1 || row === 2) line.classList.add("front-row");
+        if(row === 15 || row === 16) line.classList.add("exit-row");
+
+        // 좌측 시트 A, B, C
         ["A","B","C"].forEach(l => line.appendChild(createCabinSeat(row+l)));
+        
+        // 중앙 열 번호
         const no = document.createElement("div");
-        no.className = "rowNo"; no.textContent = row; line.appendChild(no);
+        no.className = "rowNo"; no.textContent = row; 
+        line.appendChild(no);
+        
+        // 우측 시트 D, E, F (1열 우측 제외 처리)
         if(row !== 1){
             ["D","E","F"].forEach(l => line.appendChild(createCabinSeat(row+l)));
         } else {
             for(let i=0; i<3; i++) {
                 const emp = document.createElement("div");
-                emp.style.width = "26px"; line.appendChild(emp);
+                emp.style.width = "28px"; line.appendChild(emp);
             }
         }
+
+        // ⚠️ 비상구행(15, 16열) 좌우 양쪽에 비상구 가이드 텍스트 도어 추가
+        if(row === 15 || row === 16) {
+            const leftGate = document.createElement("div");
+            leftGate.className = "exit-gate left-gate";
+            leftGate.textContent = "⚠️ EXIT ➔";
+            
+            const rightGate = document.createElement("div");
+            rightGate.className = "exit-gate right-gate";
+            rightGate.textContent = "↵ EXIT ⚠️";
+            
+            line.appendChild(leftGate);
+            line.appendChild(rightGate);
+        }
+
         seatMap.appendChild(line);
     }
 }
