@@ -30,18 +30,25 @@ header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:20px 30px;
+    padding:20px 25px;
 }
 .logo{
-    font-size:26px;
-    font-weight:bold;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-.logo span{
-    font-size:20px;
+.logo .brand {
+    font-size:24px;
+    font-weight:900;
+    letter-spacing: -0.5px;
+}
+.logo .sub-title {
+    font-size:18px;
     font-weight:normal;
-    margin-left:15px;
     opacity:0.9;
     letter-spacing:-0.5px;
+    border-left: 1px solid rgba(255,255,255,0.4);
+    padding-left: 12px;
 }
 .flight{
     display:flex;
@@ -377,7 +384,10 @@ main{
 <body>
 
 <header>
-    <div class="logo">✈ EASTAR JET <span>지정좌석 구매 서비스</span></div>
+    <div class="logo">
+    <span class="brand">✈ EASTAR JET</span>
+    <span class="sub-title">지정좌석 구매 서비스</span>
+</div>
     <div class="flight">
         <div>
             <label>Flight</label>
