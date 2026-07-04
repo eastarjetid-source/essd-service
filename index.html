@@ -88,7 +88,6 @@ main{
     font-size:32px;
     margin-bottom:15px;
 }
-/* 💡 DEF 정렬 수정: 상단 헤더 그리드 비율 조정 */
 .headerSeat{
     display:grid;
     grid-template-columns: 26px 26px 26px 35px 26px 26px 26px;
@@ -103,7 +102,6 @@ main{
     flex-direction:column;
     gap:6px;
 }
-/* 💡 DEF 정렬 수정: 좌석 열 그리드 비율을 상단 헤더와 완벽 일치 */
 .cabinRow{
     display:grid;
     grid-template-columns: 26px 26px 26px 35px 26px 26px 26px;
@@ -232,7 +230,7 @@ main{
     width: 100%;
     aspect-ratio: 1 / 1;
 }
-/* 💡 PC 좌석 타일: 아이폰과 문자가 꽉 차도록 패딩 및 크기 밸런스 조정 */
+/* PC 좌석 타일 기본 스타일 */
 .seatTile {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -391,12 +389,20 @@ main{
         border-radius: 14px;
     }
     
-    /* 💡 모바일 최적화: 의자 모양 제거 및 텍스트 크기 확장/중앙 정렬 */
+    /* 💡 모바일 아이콘 제어 수정: 기본 의자는 숨기되, 선택 완료(sold)된 ❌ 표시는 나타나도록 동적 제어 */
     .seatTile .icon {
-        display: none !important; /* 모바일에서 아이콘 제거 */
+        display: none; 
     }
+    .seatTile.sold .icon {
+        display: block !important; 
+        font-size: 24px;
+        margin-bottom: 0px;
+        line-height: 1;
+    }
+    
+    /* 판매 가능 상태일 때는 번호가 꽉 차게, 판매되었을 때는 X 밑에 이쁘게 안착 */
     .seatTile .seatNo {
-        font-size: 20px; /* 글자 크기를 키워 타일에 가득 차게 구성 */
+        font-size: 20px; 
         font-weight: 900;
         margin: 0;
         padding: 0;
@@ -406,14 +412,16 @@ main{
         width: 100%;
         height: 100%;
     }
-    /* 판매된 좌석(X표시 대신 배경색과 테두리 효과 강조) */
     .seatTile.sold .seatNo {
+        height: auto;
+        font-size: 14px; /* X 표시가 크게 뜨므로 글자크기를 하단 가독성에 맞춤 */
         color: #d32f2f;
+        margin-top: 2px;
     }
-    /* 판매된 좌석일 때 텍스트 뒤에 대각선 취소선 효과 적용해 직관성 유지 */
     .seatTile.sold {
         background: #fafafa;
         position: relative;
+        padding: 6px 4px;
     }
 
     #setting {
@@ -469,7 +477,6 @@ main{
     <div class="left">
         <h2>Cabin Layout</h2>
         <div class="nose">▲</div>
-        <!-- 💡 상단 레이블 배열 정밀 수정 -->
         <div class="headerSeat">
             <div>A</div><div>B</div><div>C</div>
             <div></div>
@@ -574,7 +581,6 @@ function refresh() {
     drawStructuredTiles();
 }
 
-/* 💡 DEF 정렬 수정: 복도 및 공백 처리부 하드코딩 구조 전면 정렬 */
 function drawCabin(){
     const seatMap = document.getElementById("seatMap");
     seatMap.innerHTML = "";
@@ -597,7 +603,6 @@ function drawCabin(){
                 line.appendChild(createCabinSeat(row + letter));
             });
         } else {
-            // 1열 DEF가 비어있어도 그리드 칸 규격을 완벽히 유지하도록 빈 요소 3개 생성
             for(let i=0; i<3; i++) {
                 const empty = document.createElement("div");
                 empty.style.width = "26px";
