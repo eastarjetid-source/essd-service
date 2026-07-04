@@ -414,7 +414,7 @@ main{
     <input id="routeInput" value="MDC → ICN" disabled style="background:#f0f0f0; color:#999; cursor:not-allowed;">
 </label>
     <label>
-        기번
+        기종
         <input id="aircraftInput" value="B737-8">
     </label>
     <button id="save">정보 저장</button>
@@ -650,13 +650,13 @@ saveBtn.onclick = () => {
     infoState.route = document.getElementById("routeInput").value;
     */
     
-    // 현재는 기번(Aircraft) 정보만 수정 및 저장 가능하도록 유지
+    // 현재는 기종(Aircraft) 정보만 수정 및 저장 가능하도록 유지
     infoState.aircraft = document.getElementById("aircraftInput").value;
     safariSafeSave("ESSD_INFO", infoState);
     
     panel.classList.remove("open");
     refresh();
-    alert("기번 정보가 변경되었습니다. (편명/노선은 관리자 설정에 의해 잠겨 있습니다.)");
+    alert("기종 정보가 변경되었습니다. (편명/노선은 관리자 설정에 의해 잠겨 있습니다.)");
 };
 
 resetBtn.onclick = () => {
