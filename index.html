@@ -10,14 +10,12 @@
     padding:0;
     box-sizing:border-box;
     font-family:"Segoe UI","맑은 고딕",sans-serif;
-    /* 💡 아이폰 터치 시 발생하는 반투명 회색 하이라이트 제거 및 터치 반응 개선 */
     -webkit-tap-highlight-color: transparent;
 }
 body{
     background:#eef2f5;
     color:#333;
     overflow:hidden;
-    /* 💡 아이폰 화면 스크롤 바운스 방지 */
     position: fixed;
     width: 100%;
     height: 100%;
@@ -78,7 +76,7 @@ main{
     padding:25px;
     border-right:1px solid #ddd;
     overflow:auto;
-    -webkit-overflow-scrolling: touch; /* 💡 아이폰 부드러운 스크롤 */
+    -webkit-overflow-scrolling: touch;
 }
 .left h2{
     color:#c8102e;
@@ -124,7 +122,6 @@ main{
     font-weight:bold;
     color:#666;
 }
-/* 객실 좌석 */
 .cabinSeat{
     width:26px;
     height:26px;
@@ -166,7 +163,7 @@ main{
     flex:1;
     padding:25px;
     overflow:auto;
-    -webkit-overflow-scrolling: touch; /* 💡 아이폰 부드러운 스크롤 */
+    -webkit-overflow-scrolling: touch;
 }
 .card{
     background:white;
@@ -192,7 +189,6 @@ main{
     border-radius:20px;
     font-weight:bold;
 }
-/* 가격 표시 스타일 */
 .priceTag {
     text-align: right;
     font-size: 18px;
@@ -205,7 +201,6 @@ main{
     color: #c8102e;
     font-size: 20px;
 }
-/* 주의사항 스타일 */
 .noticeBox {
     margin-top: 20px;
     padding-top: 15px;
@@ -254,7 +249,6 @@ main{
     align-items: center;
     box-shadow: 0 4px 10px rgba(0,0,0,.1);
 }
-/* 💡 개선2: 좌석 타일 터치 피드백 (누를 때 살짝 들어가는 효과) */
 .seatTile:active {
     transform: scale(0.92);
 }
@@ -339,7 +333,7 @@ main{
 #save { background:#2196f3; }
 #reset { background:#c8102e; }
 
-/* 📱 스마트폰/모바일 환경 최적화 (레이아웃 및 글자 크기 반응형) */
+/* 📱 스마트폰/모바일 환경 최적화 */
 @media (max-width: 1024px) {
     body { 
         position: fixed; 
@@ -351,8 +345,6 @@ main{
         flex-direction: column; 
         height: calc(100vh - 70px);
     }
-    
-    /* 📱 모바일 헤더 타이틀 깨짐 방지 */
     header {
         height: 70px;
         padding: 10px 15px;
@@ -391,6 +383,8 @@ main{
         overflow-y: auto; 
         -webkit-overflow-scrolling: touch; 
         padding: 12px;
+        /* 💡 패널이 열렸을 때 아래쪽 톱니바퀴나 여백으로 인해 스크롤이 끊기는 걸 방지하기 위해 패딩 추가 */
+        padding-bottom: 80px; 
     }
     .card {
         padding: 15px;
@@ -405,20 +399,25 @@ main{
         font-weight: bold;
     }
 
-    /* 💡 개선1: 모바일에서 관리자 톱니바퀴 버튼 위치 최적화 (콘텐츠 안 가리게 우측 상단 배치) */
+    /* 💡 수정: 톱니바퀴 버튼을 다시 우측 하단으로 내리되, 컴팩트하게 축소하여 가독성 확보 */
     #setting {
-        top: 12px;
+        top: auto;
         right: 15px;
-        bottom: auto; /* 하단 고정 해제 */
-        width: 45px;
-        height: 45px;
-        font-size: 20px;
-        background: rgba(255, 255, 255, 0.2); /* 헤더에 자연스럽게 동화되도록 투명 처리 */
-        box-shadow: none;
+        bottom: 15px; 
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+        background: #c8102e;
+        box-shadow: 0 4px 10px rgba(0,0,0,.2);
     }
     #panel {
         top: 70px;
         height: calc(100vh - 70px);
+        width: 280px;
+        right: -300px;
+    }
+    #panel.open {
+        right: 0;
     }
 }
 </style>
@@ -493,15 +492,14 @@ main{
 
 <div id="panel">
     <h2>관리자 패널</h2>
-<label>
-    편명
-    <!-- 💡 개선4: 기본 편명값을 ZE536으로 완벽 일치 통일 -->
-    <input id="flightInput" value="ZE536" disabled style="background:#f0f0f0; color:#999; cursor:not-allowed;">
-</label>
-<label>
-    노선
-    <input id="routeInput" value="MDC → ICN" disabled style="background:#f0f0f0; color:#999; cursor:not-allowed;">
-</label>
+    <label>
+        편명
+        <input id="flightInput" value="ZE536" disabled style="background:#f0f0f0; color:#999; cursor:not-allowed;">
+    </label>
+    <label>
+        노선
+        <input id="routeInput" value="MDC → ICN" disabled style="background:#f0f0f0; color:#999; cursor:not-allowed;">
+    </label>
     <label>
         기종
         <input id="aircraftInput" value="B737-8">
@@ -519,13 +517,11 @@ const EXIT_SEATS = [
 const SALE_SEATS = [...FRONT_SEATS, ...EXIT_SEATS];
 
 let seatState = {};
-// 💡 개선4: 초기 JavaScript 상태값 객체에서도 ZE536으로 완전히 통일시켰습니다.
 let infoState = { flight: "ZE536", route: "MDC → ICN", aircraft: "B737-8" };
 
 try {
     seatState = JSON.parse(localStorage.getItem("ESSD_SEATS")) || {};
     infoState = JSON.parse(localStorage.getItem("ESSD_INFO")) || infoState;
-    // 혹시 기존에 로컬스토리지에 구 편명(ZE591)이 저장되어 있다면 강제로 ZE536으로 갱신해 줍니다.
     if(infoState.flight !== "ZE536") {
         infoState.flight = "ZE536";
     }
@@ -726,7 +722,21 @@ const panel = document.getElementById("panel");
 const saveBtn = document.getElementById("save");
 const resetBtn = document.getElementById("reset");
 
-settingBtn.onclick = () => { panel.classList.toggle("open"); };
+// 💡 관리자 패널 토글 버튼 이벤트
+settingBtn.onclick = (e) => { 
+    e.stopPropagation(); // document 클릭 이벤트로 전파되어 바로 닫히는 현상 방지
+    panel.classList.toggle("open"); 
+};
+
+// 💡 개선 사항: 관리자 패널 바깥 영역 클릭 시 닫기
+document.addEventListener('click', (e) => {
+    // 패널이 열려 있는 상태에서, 클릭된 대상이 패널 내부나 톱니바퀴 버튼이 아닐 경우 패널을 닫음
+    if (panel.classList.contains("open")) {
+        if (!panel.contains(e.target) && e.target !== settingBtn) {
+            panel.classList.remove("open");
+        }
+    }
+});
 
 document.getElementById("flightInput").value = infoState.flight;
 document.getElementById("routeInput").value = infoState.route;
@@ -741,10 +751,9 @@ saveBtn.onclick = () => {
     alert("기종 정보가 변경되었습니다. (편명/노선은 잠겨 있습니다.)");
 };
 
-// 💡 개선3: 초기화 시 단순 확인 창을 넘어 비밀번호 확인을 한 번 더 거치도록 강화
 resetBtn.onclick = () => {
     const pw = prompt("좌석 현황을 전체 초기화하려면 관리자 비밀번호를 입력하세요.");
-    if (pw === "1234") { // 🔑 비밀번호는 기본 '1234'로 설정해 두었습니다.
+    if (pw === "1234") {
         if(confirm("정말로 모든 좌석 판매 현황을 처음 상태로 되돌리시겠습니까?")) {
             seatState = {};
             try { localStorage.removeItem("ESSD_SEATS"); } catch(e){}
