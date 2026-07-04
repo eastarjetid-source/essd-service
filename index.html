@@ -342,7 +342,6 @@ main{
     background:#c8102e;
 }
 
-/* 📱 스마트폰/모바일 환경 최적화 (왼쪽 캐빈 숨기기) */
 /* 📱 스마트폰/모바일 환경 최적화 (레이아웃 및 글자 크기 반응형) */
 @media (max-width: 1024px) {
     body { 
@@ -353,8 +352,40 @@ main{
     }
     main { 
         flex-direction: column; 
-        height: calc(100vh - 80px); 
+        height: calc(100vh - 70px); /* 헤더 축소에 맞춰 조절 */
     }
+    
+    /* 📱 모바일 헤더 타이틀 깨짐 방지 구조화 */
+    header {
+        height: 70px; /* 높이를 살짝 줄여 모바일 공간 확보 */
+        padding: 10px 15px;
+        flex-direction: row; /* 좌우 배치 유지 */
+    }
+    .logo {
+        flex-direction: column; /* 모바일에선 위아래 2줄 정렬로 분리 */
+        align-items: flex-start;
+        gap: 2px;
+    }
+    .logo .brand {
+        font-size: 16px; /* 모바일 아이폰 화면에 맞게 브랜드명 축소 */
+    }
+    .logo .sub-title {
+        font-size: 12px; /* 지정좌석 구매 글씨 축소 */
+        border-left: none; /* 모바일에서는 구분 세로선 제거 */
+        padding-left: 0;
+        opacity: 0.8;
+    }
+    /* 상단 비행정보 글자 크기도 모바일에 맞게 우측 정렬 및 축소 */
+    .flight {
+        gap: 12px;
+    }
+    .flight label {
+        font-size: 10px;
+    }
+    .flight span {
+        font-size: 14px;
+    }
+
     .left { 
         display: none !important; 
     }
@@ -385,9 +416,9 @@ main{
 
 <header>
     <div class="logo">
-    <span class="brand">✈ EASTAR JET</span>
-    <span class="sub-title">지정좌석 구매 서비스</span>
-</div>
+        <span class="brand">✈ EASTAR JET</span>
+        <span class="sub-title">지정좌석 구매</span>
+    </div>
     <div class="flight">
         <div>
             <label>Flight</label>
@@ -437,7 +468,7 @@ main{
             </div>
             <div id="exitArea"></div>
             <div class="priceTag">가격: <span>KRW 41,000</span></div>
-            
+             
             <div class="noticeBox">
                 <div>• <strong>15열 좌석</strong>은 비상 상황 시 탈출 동선 확보를 위해 <strong>등받이가 고정</strong>되어 후방 리클라이닝이 불가합니다.</div>
                 <div class="warning-title" style="margin-top: 6px;">• 비상구 좌석 지정 불가 고객 (항공안전법 규정)</div>
