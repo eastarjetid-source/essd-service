@@ -69,7 +69,7 @@ main{
     display:flex;
     height:calc(100vh - 80px);
 }
-/* ================= LEFT (Cabin Layout - 비행기 스타일) ================= */
+/* ================= LEFT (Cabin Layout) ================= */
 .left{
     width:42%;
     background:#f4f7f9;
@@ -88,7 +88,6 @@ main{
     font-size: 20px;
 }
 
-/* ✈️ 실제 비행기 기체 느낌의 컨테이너 */
 .airplane-body {
     background: #ffffff;
     border: 3px solid rgb(158, 162, 161);
@@ -100,7 +99,6 @@ main{
     position: relative;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
-/* 조종석 윈도우 표현 */
 .cockpit {
     position: absolute;
     top: 20px;
@@ -137,7 +135,6 @@ main{
     position: relative;
 }
 
-/* 기내 좌석 행 구조 */
 .cabinRow{
     display:grid;
     grid-template-columns: 28px 28px 28px 40px 28px 28px 28px;
@@ -147,7 +144,7 @@ main{
     position: relative;
 }
 
-/* 열 번호 기본 스타일 */
+/* 1, 2, 15, 16열의 과도한 색상을 제거하고 깔끔한 회색 톤으로 통일 */
 .rowNo{
     text-align:center;
     font-size:12px;
@@ -159,17 +156,7 @@ main{
     position: relative;
 }
 
-/* ⭐ 첫열 & 비상구 직관적 식별용 사이드 라벨 배지 */
-.cabinRow.front-row .rowNo {
-    background: rgb(210, 0, 21);
-    color: white;
-}
-.cabinRow.exit-row .rowNo {
-    background: rgb(142, 1, 20);
-    color: white;
-}
-
-/* ⚠️ 비상구 게이트 그래픽 가이드 */
+/* ⚠️ 비상구 게이트 (왼쪽 탈출방향 화살표 좌측으로 정상화 수정) */
 .exit-gate {
     position: absolute;
     top: 50%;
@@ -180,10 +167,9 @@ main{
     white-space: nowrap;
     pointer-events: none;
 }
-.exit-gate.left-gate { left: -65px; }
-.exit-gate.right-gate { right: -65px; }
+.exit-gate.left-gate { left: -65px; } /* 왼쪽 도어: 바깥 방향 화살표 */
+.exit-gate.right-gate { right: -65px; } /* 오른쪽 도어: 바깥 방향 화살표 */
 
-/* 캐빈 좌석 기본 스타일 */
 .cabinSeat{
     width:28px;
     height:28px;
@@ -193,7 +179,7 @@ main{
     cursor: pointer;
 }
 .cabinSeat.sale{
-    background:rgb(210, 0, 21);
+    background:#2b6cb0; /* 기내의 선택가능 좌석도 편안한 블루 톤으로 매칭 */
 }
 .cabinSeat.sold{
     background:white;
@@ -225,7 +211,7 @@ main{
 }
 .card{
     background: #ffffff; 
-    border: 1px solid rgb(140, 140, 140);
+    border: 1px solid rgb(200, 200, 200);
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.04);
@@ -238,7 +224,7 @@ main{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    border-bottom: 3px solid rgb(210, 0, 21); 
+    border-bottom: 3px solid #1a365d; /* 강한 레드 대신 세련된 딥 네이비 라인 */
     padding-bottom: 10px;
 }
 .titleArea {
@@ -247,7 +233,7 @@ main{
     gap: 12px;
 }
 .cardHeader h2{
-    color:rgb(210, 0, 21);
+    color:#1a365d;
     font-size: 24px;
     font-weight: 900;
 }
@@ -261,10 +247,10 @@ main{
     border: 1px solid rgb(192, 206, 209);
 }
 .priceBadge span {
-    color: rgb(210, 0, 21);
+    color: #2b6cb0;
 }
 .count{
-    background:rgb(210, 0, 21);
+    background:#1a365d;
     color:white;
     padding:6px 16px;
     border-radius:20px;
@@ -286,7 +272,7 @@ main{
     margin-bottom: 4px;
 }
 
-/* ================= 벤치마킹 구조 (가운데 배치형) ================= */
+/* ================= 벤치마킹 구조 ================= */
 .benchGridContainer {
     display: flex;
     flex-direction: column;
@@ -323,16 +309,16 @@ main{
     flex: 1;
 }
 
-/* 이스타항공 스타일 지정좌석 타일 */
+/* 💺 좌석 타일: 눈이 편안하고 신뢰감을 주는 Deep Navy & Blue 계열 변경 */
 .seatTile {
     flex: 1;
     max-width: 90px;
     aspect-ratio: 1.15 / 1;
     max-height: 58px;
     border-radius: 6px;
-    background: rgb(210, 0, 21);
+    background: #2b6cb0; /* 스카이 블루 톤 */
     color: white;
-    border: 1px solid rgb(142, 1, 20);
+    border: 1px solid #1a365d;
     cursor: pointer;
     transition: transform 0.1s ease, background 0.15s;
     display: flex;
@@ -340,7 +326,7 @@ main{
     justify-content: center;
     align-items: center;
     position: relative;
-    box-shadow: 0 2px 6px rgba(210,0,21,0.15);
+    box-shadow: 0 2px 6px rgba(43,108,176,0.15);
 }
 .seatTile:active { transform: scale(0.94); }
 .seatTile .icon { font-size: 14px; margin-bottom: 2px; opacity: 0.9; }
@@ -373,7 +359,7 @@ main{
     height:60px;
     border-radius:50%;
     border:none;
-    background:rgb(210, 0, 21);
+    background:#1a365d;
     color:white;
     font-size:28px;
     cursor:pointer;
@@ -394,14 +380,13 @@ main{
     z-index:998;
 }
 #panel.open{ right:0; }
-#panel h2{ color:rgb(210, 0, 21); margin-bottom:20px; }
+#panel h2{ color:#1a365d; margin-bottom:20px; }
 #panel label{ display:block; margin-bottom:18px; font-weight:bold; }
 #panel input{ width:100%; margin-top:8px; padding:10px; border-radius:8px; border:1px solid rgb(158, 162, 161); }
 #panel button{ width:100%; margin-top:15px; padding:12px; border:none; border-radius:10px; color:white; font-size:16px; cursor:pointer; }
 #save { background:rgb(48, 58, 60); }
 #reset { background:rgb(210, 0, 21); }
 
-/* 📱 모바일 */
 @media (max-width: 1024px) {
     main { flex-direction: column; height: calc(100vh - 70px); }
     header { height: 70px; padding: 10px 15px; }
@@ -447,10 +432,7 @@ main{
 <main>
     <div class="left">
         <h2>Cabin Layout</h2>
-        
-        <!-- ✈️ 비행기 동체 프레임 시작 -->
         <div class="airplane-body">
-            <!-- 조종석 창문 구성 -->
             <div class="cockpit">
                 <div class="cockpit-window left-w"></div>
                 <div class="cockpit-window right-w"></div>
@@ -463,11 +445,9 @@ main{
             </div>
             <div id="seatMap"></div>
         </div>
-        <!-- ✈️ 비행기 동체 프레임 끝 -->
     </div>
 
     <div class="right">
-        <!-- 첫번째 열 카드 -->
         <div class="card">
             <div class="cardHeader">
                 <div class="titleArea">
@@ -479,7 +459,6 @@ main{
             <div class="benchGridContainer" id="frontArea"></div>
         </div>
 
-        <!-- 비상구 열 카드 -->
         <div class="card">
             <div class="cardHeader">
                 <div class="titleArea">
@@ -554,20 +533,13 @@ function drawCabin(){
     for(let row=1; row<=32; row++){
         const line = document.createElement("div");
         line.className = "cabinRow";
-        
-        // 시각 구분을 위한 클래스 할당
-        if(row === 1 || row === 2) line.classList.add("front-row");
-        if(row === 15 || row === 16) line.classList.add("exit-row");
 
-        // 좌측 시트 A, B, C
         ["A","B","C"].forEach(l => line.appendChild(createCabinSeat(row+l)));
         
-        // 중앙 열 번호
         const no = document.createElement("div");
         no.className = "rowNo"; no.textContent = row; 
         line.appendChild(no);
         
-        // 우측 시트 D, E, F (1열 우측 제외 처리)
         if(row !== 1){
             ["D","E","F"].forEach(l => line.appendChild(createCabinSeat(row+l)));
         } else {
@@ -577,15 +549,15 @@ function drawCabin(){
             }
         }
 
-        // ⚠️ 비상구행(15, 16열) 좌우 양쪽에 비상구 가이드 텍스트 도어 추가
+        // ⚠️ 비상구 방향 표기 수정 (왼쪽 탈출구는 바깥방향인 왼쪽 화살표 지향)
         if(row === 15 || row === 16) {
             const leftGate = document.createElement("div");
             leftGate.className = "exit-gate left-gate";
-            leftGate.textContent = "⚠️ EXIT ➔";
+            leftGate.textContent = "← EXIT ⚠️";
             
             const rightGate = document.createElement("div");
             rightGate.className = "exit-gate right-gate";
-            rightGate.textContent = "↵ EXIT ⚠️";
+            rightGate.textContent = "⚠️ EXIT →";
             
             line.appendChild(leftGate);
             line.appendChild(rightGate);
@@ -614,7 +586,6 @@ function drawBenchmarkedTiles() {
     
     let frontSold = 0, exitSold = 0;
 
-    // 1열행
     const row1 = document.createElement("div");
     row1.className = "benchRow";
     const r1Left = document.createElement("div"); r1Left.className = "benchSide leftSide";
@@ -624,7 +595,6 @@ function drawBenchmarkedTiles() {
     row1.appendChild(r1Left); row1.appendChild(r1Center); row1.appendChild(r1Right);
     frontArea.appendChild(row1);
 
-    // 2열행
     const row2 = document.createElement("div");
     row2.className = "benchRow";
     const r2Left = document.createElement("div"); r2Left.className = "benchSide leftSide emptyPlaceholder";
@@ -634,7 +604,6 @@ function drawBenchmarkedTiles() {
     row2.appendChild(r2Left); row2.appendChild(r2Center); row2.appendChild(r2Right);
     frontArea.appendChild(row2);
 
-    // 15, 16열 비상구
     [15, 16].forEach(rNum => {
         const eRow = document.createElement("div");
         eRow.className = "benchRow";
