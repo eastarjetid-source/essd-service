@@ -69,7 +69,7 @@ main{
     display:flex;
     height:calc(100vh - 80px);
 }
-/* ================= LEFT ================= */
+/* ================= LEFT (Cabin Layout) ================= */
 .left{
     width:38%;
     background:white;
@@ -88,39 +88,37 @@ main{
     font-size:32px;
     margin-bottom:15px;
 }
+/* 💡 DEF 정렬 수정: 상단 헤더 그리드 비율 조정 */
 .headerSeat{
     display:grid;
-    grid-template-columns:
-    30px 30px 30px
-    70px
-    30px 30px 30px;
+    grid-template-columns: 26px 26px 26px 35px 26px 26px 26px;
     justify-content:center;
-    gap:8px;
-    margin-bottom:10px;
+    gap:6px;
+    margin-bottom:12px;
     font-weight:bold;
+    text-align: center;
 }
 #seatMap{
     display:flex;
     flex-direction:column;
-    gap:5px;
+    gap:6px;
 }
+/* 💡 DEF 정렬 수정: 좌석 열 그리드 비율을 상단 헤더와 완벽 일치 */
 .cabinRow{
     display:grid;
-    grid-template-columns:
-    30px 30px 30px
-    25px
-    35px
-    25px
-    30px 30px 30px;
+    grid-template-columns: 26px 26px 26px 35px 26px 26px 26px;
     justify-content:center;
     align-items:center;
-    gap:5px;
+    gap:6px;
 }
 .rowNo{
     text-align:center;
-    font-size:14px;
+    font-size:13px;
     font-weight:bold;
     color:#666;
+    background: #f5f5f5;
+    border-radius: 4px;
+    padding: 2px 0;
 }
 .cabinSeat{
     width:26px;
@@ -234,6 +232,7 @@ main{
     width: 100%;
     aspect-ratio: 1 / 1;
 }
+/* 💡 PC 좌석 타일: 아이폰과 문자가 꽉 차도록 패딩 및 크기 밸런스 조정 */
 .seatTile {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -248,17 +247,18 @@ main{
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 10px rgba(0,0,0,.1);
+    padding: 4px;
 }
 .seatTile:active {
     transform: scale(0.92);
 }
 .seatTile .icon {
-    font-size: 28px;
+    font-size: 32px;
     line-height: 1;
     margin-bottom: 2px;
 }
 .seatTile .seatNo {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 900;
     line-height: 1;
     letter-spacing: -0.5px;
@@ -383,7 +383,6 @@ main{
         overflow-y: auto; 
         -webkit-overflow-scrolling: touch; 
         padding: 12px;
-        /* 💡 패널이 열렸을 때 아래쪽 톱니바퀴나 여백으로 인해 스크롤이 끊기는 걸 방지하기 위해 패딩 추가 */
         padding-bottom: 80px; 
     }
     .card {
@@ -391,15 +390,32 @@ main{
         margin-bottom: 15px;
         border-radius: 14px;
     }
+    
+    /* 💡 모바일 최적화: 의자 모양 제거 및 텍스트 크기 확장/중앙 정렬 */
     .seatTile .icon {
-        font-size: 20px;
+        display: none !important; /* 모바일에서 아이콘 제거 */
     }
     .seatTile .seatNo {
-        font-size: 15px;
-        font-weight: bold;
+        font-size: 20px; /* 글자 크기를 키워 타일에 가득 차게 구성 */
+        font-weight: 900;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+    /* 판매된 좌석(X표시 대신 배경색과 테두리 효과 강조) */
+    .seatTile.sold .seatNo {
+        color: #d32f2f;
+    }
+    /* 판매된 좌석일 때 텍스트 뒤에 대각선 취소선 효과 적용해 직관성 유지 */
+    .seatTile.sold {
+        background: #fafafa;
+        position: relative;
     }
 
-    /* 💡 수정: 톱니바퀴 버튼을 다시 우측 하단으로 내리되, 컴팩트하게 축소하여 가독성 확보 */
     #setting {
         top: auto;
         right: 15px;
@@ -453,6 +469,7 @@ main{
     <div class="left">
         <h2>Cabin Layout</h2>
         <div class="nose">▲</div>
+        <!-- 💡 상단 레이블 배열 정밀 수정 -->
         <div class="headerSeat">
             <div>A</div><div>B</div><div>C</div>
             <div></div>
@@ -557,6 +574,7 @@ function refresh() {
     drawStructuredTiles();
 }
 
+/* 💡 DEF 정렬 수정: 복도 및 공백 처리부 하드코딩 구조 전면 정렬 */
 function drawCabin(){
     const seatMap = document.getElementById("seatMap");
     seatMap.innerHTML = "";
@@ -569,20 +587,17 @@ function drawCabin(){
             line.appendChild(createCabinSeat(row + letter));
         });
 
-        line.appendChild(document.createElement("div"));
-
         const no = document.createElement("div");
         no.className = "rowNo";
         no.textContent = row;
         line.appendChild(no);
-
-        line.appendChild(document.createElement("div"));
 
         if(row !== 1){
             ["D","E","F"].forEach(letter => {
                 line.appendChild(createCabinSeat(row + letter));
             });
         } else {
+            // 1열 DEF가 비어있어도 그리드 칸 규격을 완벽히 유지하도록 빈 요소 3개 생성
             for(let i=0; i<3; i++) {
                 const empty = document.createElement("div");
                 empty.style.width = "26px";
@@ -722,15 +737,12 @@ const panel = document.getElementById("panel");
 const saveBtn = document.getElementById("save");
 const resetBtn = document.getElementById("reset");
 
-// 💡 관리자 패널 토글 버튼 이벤트
 settingBtn.onclick = (e) => { 
-    e.stopPropagation(); // document 클릭 이벤트로 전파되어 바로 닫히는 현상 방지
+    e.stopPropagation(); 
     panel.classList.toggle("open"); 
 };
 
-// 💡 개선 사항: 관리자 패널 바깥 영역 클릭 시 닫기
 document.addEventListener('click', (e) => {
-    // 패널이 열려 있는 상태에서, 클릭된 대상이 패널 내부나 톱니바퀴 버튼이 아닐 경우 패널을 닫음
     if (panel.classList.contains("open")) {
         if (!panel.contains(e.target) && e.target !== settingBtn) {
             panel.classList.remove("open");
