@@ -220,52 +220,49 @@ main{
     margin-bottom: 4px;
 }
 /* ================= 좌석 지정 그리드 배치 ================= */
-/* 💡 화면 너비에 맞춰 7칸 레이아웃을 비율로 자동 분할 */
 .tileGridRow {
     display: grid;
-    /* 좌석 3칸(1fr씩) + 통로(0.5fr) + 좌석 3칸(1fr씩) 비율 설정 */
     grid-template-columns: repeat(3, 1fr) 0.4fr repeat(3, 1fr);
     justify-content: center;
     align-items: center;
-    gap: 8px; /* 타일 간격 간격을 조금 줄여 모바일 대응 */
+    gap: 8px; 
     margin-bottom: 12px;
     width: 100%;
 }
 .tileGridRow:last-child {
     margin-bottom: 0;
 }
-/* 통로 영역 비율 맞춤 */
 .aisleSpace {
     width: 100%;
 }
-/* 빈 공간 타일 비율 맞춤 */
 .emptySpace {
     width: 100%;
-    aspect-ratio: 1 / 1; /* 가로세로 1:1 비율 유지 */
+    aspect-ratio: 1 / 1;
 }
-/* 💡 타일 자체의 크기를 고정(80px)하지 않고, 늘어나게 설정 */
 .seatTile {
     width: 100%;
-    aspect-ratio: 1 / 1; /* 가로세로 정정사각형 유지 */
+    aspect-ratio: 1 / 1;
     border-radius: 12px;
     background: #2196f3;
     color: white;
     border: none;
     cursor: pointer;
-    transition: .18s;
+    transition: transform 0.1s ease, background 0.18s;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 10px rgba(0,0,0,.1);
 }
-/* 💺 나 ❌ 아이콘 크기 확대 */
+/* 💡 개선2: 좌석 타일 터치 피드백 (누를 때 살짝 들어가는 효과) */
+.seatTile:active {
+    transform: scale(0.92);
+}
 .seatTile .icon {
     font-size: 28px;
     line-height: 1;
     margin-bottom: 2px;
 }
-/* 1A, 15F 같은 좌석 번호 글자 크기 확대 및 굵게 */
 .seatTile .seatNo {
     font-size: 20px;
     font-weight: 900;
@@ -292,6 +289,10 @@ main{
     cursor:pointer;
     box-shadow:0 6px 15px rgba(0,0,0,.2);
     z-index:999;
+    transition: transform 0.1s ease;
+}
+#setting:active {
+    transform: scale(0.9);
 }
 #panel{
     position:fixed;
@@ -335,12 +336,8 @@ main{
     font-size:16px;
     cursor:pointer;
 }
-#save{
-    background:#2196f3;
-}
-#reset{
-    background:#c8102e;
-}
+#save { background:#2196f3; }
+#reset { background:#c8102e; }
 
 /* 📱 스마트폰/모바일 환경 최적화 (레이아웃 및 글자 크기 반응형) */
 @media (max-width: 1024px) {
@@ -352,30 +349,29 @@ main{
     }
     main { 
         flex-direction: column; 
-        height: calc(100vh - 70px); /* 헤더 축소에 맞춰 조절 */
+        height: calc(100vh - 70px);
     }
     
-    /* 📱 모바일 헤더 타이틀 깨짐 방지 구조화 */
+    /* 📱 모바일 헤더 타이틀 깨짐 방지 */
     header {
-        height: 70px; /* 높이를 살짝 줄여 모바일 공간 확보 */
+        height: 70px;
         padding: 10px 15px;
-        flex-direction: row; /* 좌우 배치 유지 */
+        flex-direction: row;
     }
     .logo {
-        flex-direction: column; /* 모바일에선 위아래 2줄 정렬로 분리 */
+        flex-direction: column;
         align-items: flex-start;
         gap: 2px;
     }
     .logo .brand {
-        font-size: 16px; /* 모바일 아이폰 화면에 맞게 브랜드명 축소 */
+        font-size: 16px;
     }
     .logo .sub-title {
-        font-size: 12px; /* 지정좌석 구매 글씨 축소 */
-        border-left: none; /* 모바일에서는 구분 세로선 제거 */
+        font-size: 12px;
+        border-left: none;
         padding-left: 0;
         opacity: 0.8;
     }
-    /* 상단 비행정보 글자 크기도 모바일에 맞게 우측 정렬 및 축소 */
     .flight {
         gap: 12px;
     }
@@ -394,20 +390,35 @@ main{
         height: 100%; 
         overflow-y: auto; 
         -webkit-overflow-scrolling: touch; 
-        padding: 12px; /* 여백 최적화 */
+        padding: 12px;
     }
     .card {
         padding: 15px;
         margin-bottom: 15px;
         border-radius: 14px;
     }
-    /* 💡 모바일 화면 크기에 맞춰 타일 속 글자 크기를 최적화 */
     .seatTile .icon {
-        font-size: 20px; /* 모바일 전용 크기 */
+        font-size: 20px;
     }
     .seatTile .seatNo {
-        font-size: 15px; /* 모바일 전용 크기 */
+        font-size: 15px;
         font-weight: bold;
+    }
+
+    /* 💡 개선1: 모바일에서 관리자 톱니바퀴 버튼 위치 최적화 (콘텐츠 안 가리게 우측 상단 배치) */
+    #setting {
+        top: 12px;
+        right: 15px;
+        bottom: auto; /* 하단 고정 해제 */
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+        background: rgba(255, 255, 255, 0.2); /* 헤더에 자연스럽게 동화되도록 투명 처리 */
+        box-shadow: none;
+    }
+    #panel {
+        top: 70px;
+        height: calc(100vh - 70px);
     }
 }
 </style>
@@ -484,7 +495,8 @@ main{
     <h2>관리자 패널</h2>
 <label>
     편명
-    <input id="flightInput" value="ZE591" disabled style="background:#f0f0f0; color:#999; cursor:not-allowed;">
+    <!-- 💡 개선4: 기본 편명값을 ZE536으로 완벽 일치 통일 -->
+    <input id="flightInput" value="ZE536" disabled style="background:#f0f0f0; color:#999; cursor:not-allowed;">
 </label>
 <label>
     노선
@@ -506,13 +518,17 @@ const EXIT_SEATS = [
 ];
 const SALE_SEATS = [...FRONT_SEATS, ...EXIT_SEATS];
 
-// 💡 아이폰 사파리 개인정보 보호 모드(Private Browsing) 대응용 예외 처리
 let seatState = {};
-let infoState = { flight: "ZE591", route: "MDC → ICN", aircraft: "B737-8" };
+// 💡 개선4: 초기 JavaScript 상태값 객체에서도 ZE536으로 완전히 통일시켰습니다.
+let infoState = { flight: "ZE536", route: "MDC → ICN", aircraft: "B737-8" };
 
 try {
     seatState = JSON.parse(localStorage.getItem("ESSD_SEATS")) || {};
     infoState = JSON.parse(localStorage.getItem("ESSD_INFO")) || infoState;
+    // 혹시 기존에 로컬스토리지에 구 편명(ZE591)이 저장되어 있다면 강제로 ZE536으로 갱신해 줍니다.
+    if(infoState.flight !== "ZE536") {
+        infoState.flight = "ZE536";
+    }
 } catch (e) {
     console.log("로컬스토리지 제한 환경");
 }
@@ -520,9 +536,7 @@ try {
 function safariSafeSave(key, data) {
     try {
         localStorage.setItem(key, JSON.stringify(data));
-    } catch(e) {
-        // 쿠키나 대체 저장소를 쓰지 않는 단순 환경이므로 무시 처리
-    }
+    } catch(e) {}
 }
 
 function updateClock(){
@@ -594,7 +608,6 @@ function createCabinSeat(name){
             seat.classList.remove("sale");
             seat.classList.add("sold");
         }
-        // 💡 iOS Touch 이벤트 최적화
         seat.addEventListener('click', (e) => {
             e.preventDefault();
             toggleSeat(name);
@@ -680,11 +693,11 @@ function makeTile(name){
     btn.dataset.seat = name;
 
     const icon = document.createElement("div");
-    icon.className = "icon"; // 스타일 연결
+    icon.className = "icon";
     icon.textContent = isSold(name) ? "❌" : "💺";
 
     const seatNo = document.createElement("div");
-    seatNo.className = "seatNo"; // 스타일 연결
+    seatNo.className = "seatNo";
     seatNo.textContent = name;
 
     btn.appendChild(icon);
@@ -694,7 +707,6 @@ function makeTile(name){
         btn.classList.add("sold");
     }
 
-    // iOS Touch 이벤트 최적화
     btn.addEventListener('click', (e) => {
         e.preventDefault();
         toggleSeat(name);
@@ -721,26 +733,26 @@ document.getElementById("routeInput").value = infoState.route;
 document.getElementById("aircraftInput").value = infoState.aircraft;
 
 saveBtn.onclick = () => {
-    // 💡 편명/노선 수정 기능 임시 정지 (재사용 시 아래 주석 해제)
-    /*
-    infoState.flight = document.getElementById("flightInput").value;
-    infoState.route = document.getElementById("routeInput").value;
-    */
-    
-    // 현재는 기종(Aircraft) 정보만 수정 및 저장 가능하도록 유지
     infoState.aircraft = document.getElementById("aircraftInput").value;
     safariSafeSave("ESSD_INFO", infoState);
     
     panel.classList.remove("open");
     refresh();
-    alert("기종 정보가 변경되었습니다. (편명/노선은 관리자 설정에 의해 잠겨 있습니다.)");
+    alert("기종 정보가 변경되었습니다. (편명/노선은 잠겨 있습니다.)");
 };
 
+// 💡 개선3: 초기화 시 단순 확인 창을 넘어 비밀번호 확인을 한 번 더 거치도록 강화
 resetBtn.onclick = () => {
-    if(confirm("모든 좌석 판매 현황을 초기화하시겠습니까?")) {
-        seatState = {};
-        try { localStorage.removeItem("ESSD_SEATS"); } catch(e){}
-        refresh();
+    const pw = prompt("좌석 현황을 전체 초기화하려면 관리자 비밀번호를 입력하세요.");
+    if (pw === "1234") { // 🔑 비밀번호는 기본 '1234'로 설정해 두었습니다.
+        if(confirm("정말로 모든 좌석 판매 현황을 처음 상태로 되돌리시겠습니까?")) {
+            seatState = {};
+            try { localStorage.removeItem("ESSD_SEATS"); } catch(e){}
+            refresh();
+            alert("좌석 현황이 성공적으로 초기화되었습니다.");
+        }
+    } else if (pw !== null) {
+        alert("비밀번호가 일치하지 않습니다. 초기화가 취소됩니다.");
     }
 };
 
