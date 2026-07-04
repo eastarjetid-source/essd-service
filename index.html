@@ -177,7 +177,6 @@ main{
     cursor: pointer;
 }
 .cabinSeat.sale{
-    /* 제안해주신 스카이 블루 적용 */
     background: rgb(126, 206, 244); 
 }
 .cabinSeat.sold{
@@ -223,7 +222,6 @@ main{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    /* 제안해주신 스카이 블루 칼라 라인 매칭 */
     border-bottom: 3px solid rgb(126, 206, 244); 
     padding-bottom: 10px;
 }
@@ -251,7 +249,7 @@ main{
 }
 .count{
     background: rgb(126, 206, 244);
-    color: rgb(48, 58, 60); /* 밝은 배경에 맞춰 글씨 어둡게 변경 */
+    color: rgb(48, 58, 60); 
     padding:6px 16px;
     border-radius:20px;
     font-weight:bold;
@@ -309,15 +307,15 @@ main{
     flex: 1;
 }
 
-/* 💺 좌석 타일: 제안해주신 R 126 G 206 B 244 컬러 커스텀 셋업 */
+/* 💺 PC버전 전체화면 시 좌석 타일 크기 및 찌그러짐 현상 해결 */
 .seatTile {
     flex: 1;
-    max-width: 90px;
-    aspect-ratio: 1.15 / 1;
-    max-height: 58px;
-    border-radius: 6px;
+    max-width: 120px;        /* 가로 최대 크기 확장 */
+    min-height: 65px;        /* 세로 최소 크기를 지정하여 납작함 방지 */
+    aspect-ratio: 1.3 / 1;   /* PC화면에 맞게 도톰한 비율로 조정 */
+    border-radius: 8px;
     background: rgb(126, 206, 244); 
-    color: rgb(48, 58, 60); /* 텍스트 시인성을 확보하기 위해 어두운 그레이 매칭 */
+    color: rgb(48, 58, 60); 
     border: 1px solid rgb(96, 176, 214);
     cursor: pointer;
     transition: transform 0.1s ease, background 0.15s;
@@ -329,8 +327,8 @@ main{
     box-shadow: 0 2px 6px rgba(126,206,244,0.2);
 }
 .seatTile:active { transform: scale(0.94); }
-.seatTile .icon { font-size: 14px; margin-bottom: 2px; opacity: 0.9; }
-.seatTile .seatNo { font-size: 16px; font-weight: 900; line-height: 1; }
+.seatTile .icon { font-size: 16px; margin-bottom: 3px; opacity: 0.9; }
+.seatTile .seatNo { font-size: 18px; font-weight: 900; line-height: 1; }
 
 .seatTile.sold {
     background: rgb(158, 162, 161);
@@ -387,6 +385,7 @@ main{
 #save { background:rgb(48, 58, 60); }
 #reset { background:rgb(210, 0, 21); }
 
+/* ================= MOBILE / TABLET RESPONSIVE ================= */
 @media (max-width: 1024px) {
     main { flex-direction: column; height: calc(100vh - 70px); }
     header { height: 70px; padding: 10px 15px; }
@@ -398,7 +397,20 @@ main{
     .right { width: 100%; height: 100%; overflow-y: auto; padding: 15px; padding-bottom: 80px; }
     .card { padding: 16px; }
     .benchCenterNo { font-size: 20px; width: 35px; }
-    .seatTile { max-height: none; }
+    
+    /* 모바일 타일 최적화 */
+    .seatTile { 
+        max-height: none; 
+        min-height: 48px;     /* 모바일 터치 영역 확보를 위한 높이 */
+        aspect-ratio: auto;   /* 모바일은 정해진 그리드 레이아웃 유연하게 대응 */
+    }
+    /* 모바일 버전에서 좌석 아이콘 삭제 */
+    .seatTile .icon { 
+        display: none !important; 
+    }
+    .seatTile .seatNo {
+        font-size: 15px;
+    }
 }
 </style>
 </head>
