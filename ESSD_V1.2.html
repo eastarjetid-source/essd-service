@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ESSD V1 - 지정좌석 구매 서비스</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI","맑은 고딕",sans-serif;
+    /* 💡 아이폰 터치 시 발생하는 반투명 회색 하이라이트 제거 및 터치 반응 개선 */
+    -webkit-tap-highlight-color: transparent;
+}
+body{
+    background:#eef2f5;
+    color:#333;
+    overflow:hidden;
+    /* 💡 아이폰 화면 스크롤 바운스 방지 */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+/* ================= HEADER ================= */
+header{
+    height:80px;
+    background:#c8102e;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 30px;
+}
+.logo{
+    font-size:26px;
+    font-weight:bold;
+}
+.logo span{
+    font-size:20px;
+    font-weight:normal;
+    margin-left:15px;
+    opacity:0.9;
+    letter-spacing:-0.5px;
+}
+.flight{
+    display:flex;
+    gap:35px;
+}
+.flight div{
+    text-align:center;
+}
+.flight label{
+    display:block;
+    font-size:12px;
+    opacity:.8;
+}
+.flight span{
+    font-size:22px;
+    font-weight:bold;
+}
+/* ================= MAIN ================= */
+main{
+    display:flex;
+    height:calc(100vh - 80px);
+}
+/* ================= LEFT ================= */
+.left{
+    width:38%;
+    background:white;
+    padding:25px;
+    border-right:1px solid #ddd;
+    overflow:auto;
+    -webkit-overflow-scrolling: touch; /* 💡 아이폰 부드러운 스크롤 */
+}
+.left h2{
+    color:#c8102e;
+    text-align:center;
+    margin-bottom:20px;
+}
+.nose{
+    text-align:center;
+    font-size:32px;
+    margin-bottom:15px;
+}
+.headerSeat{
+    display:grid;
+    grid-template-columns:
+    30px 30px 30px
+    70px
+    30px 30px 30px;
+    justify-content:center;
+    gap:8px;
+    margin-bottom:10px;
+    font-weight:bold;
+}
+#seatMap{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+.cabinRow{
+    display:grid;
+    grid-template-columns:
+    30px 30px 30px
+    25px
+    35px
+    25px
+    30px 30px 30px;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+}
+.rowNo{
+    text-align:center;
+    font-size:14px;
+    font-weight:bold;
+    color:#666;
+}
+/* 객실 좌석 */
+.cabinSeat{
+    width:26px;
+    height:26px;
+    border-radius:6px;
+    background:#d6d6d6;
+    transition:.15s;
+    cursor: pointer;
+}
+.cabinSeat.sale{
+    background:#2196f3;
+}
+.cabinSeat.sold{
+    background:white;
+    border:2px solid #d32f2f;
+    position:relative;
+}
+.cabinSeat.sold::before{
+    content:"";
+    position:absolute;
+    left:2px;
+    right:2px;
+    top:10px;
+    height:2px;
+    background:#d32f2f;
+    transform:rotate(45deg);
+}
+.cabinSeat.sold::after{
+    content:"";
+    position:absolute;
+    left:2px;
+    right:2px;
+    top:10px;
+    height:2px;
+    background:#d32f2f;
+    transform:rotate(-45deg);
+}
+/* ================= RIGHT ================= */
+.right{
+    flex:1;
+    padding:25px;
+    overflow:auto;
+    -webkit-overflow-scrolling: touch; /* 💡 아이폰 부드러운 스크롤 */
+}
+.card{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+    position:relative;
+}
+.cardHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+.cardHeader h2{
+    color:#c8102e;
+}
+.count{
+    background:#2196f3;
+    color:white;
+    padding:8px 15px;
+    border-radius:20px;
+    font-weight:bold;
+}
+/* 가격 표시 스타일 */
+.priceTag {
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-top: 10px;
+    padding-right: 20px;
+}
+.priceTag span {
+    color: #c8102e;
+    font-size: 20px;
+}
+/* 주의사항 스타일 */
+.noticeBox {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+}
+.noticeBox .warning-title {
+    color: #d32f2f;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+/* ================= 좌석 지정 그리드 배치 ================= */
+.tileGridRow {
+    display:grid;
+    grid-template-columns: 80px 80px 80px 40px 80px 80px 80px;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.tileGridRow:last-child {
+    margin-bottom: 0;
+}
+.aisleSpace {
+    width: 40px;
+}
+.emptySpace {
+    width: 80px;
+    height: 80px;
+}
+.seatTile{
+    width:80px;
+    height:80px;
+    border-radius:16px;
+    background:#2196f3;
+    color:white;
+    border:none;
+    cursor:pointer;
+    transition:.18s;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+.seatTile.sold{
+    background:white;
+    color:#d32f2f;
+    border:3px solid #d32f2f;
+}
+/* ================= 관리자 ================= */
+#setting{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    border:none;
+    background:#c8102e;
+    color:white;
+    font-size:28px;
+    cursor:pointer;
+    box-shadow:0 6px 15px rgba(0,0,0,.2);
+    z-index:999;
+}
+#panel{
+    position:fixed;
+    top:80px;
+    right:-340px;
+    width:320px;
+    height:calc(100vh - 80px);
+    background:white;
+    transition:.25s;
+    padding:25px;
+    box-shadow:-5px 0 15px rgba(0,0,0,.15);
+    overflow:auto;
+    z-index:998;
+}
+#panel.open{
+    right:0;
+}
+#panel h2{
+    color:#c8102e;
+    margin-bottom:20px;
+}
+#panel label{
+    display:block;
+    margin-bottom:18px;
+    font-weight:bold;
+}
+#panel input{
+    width:100%;
+    margin-top:8px;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+#panel button{
+    width:100%;
+    margin-top:15px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+#save{
+    background:#2196f3;
+}
+#reset{
+    background:#c8102e;
+}
+
+/* 💡 화면이 너무 작은 모바일 환경 대응 레이아웃 */
+@media (max-width: 1024px) {
+    main { flex-direction: column; height: calc(100vh - 80px); overflow-y: auto; }
+    .left { width: 100%; height: auto; border-right: none; border-bottom: 1px solid #ddd; overflow: visible; }
+    .right { width: 100%; height: auto; overflow: visible; }
+    body { position: relative; overflow: auto; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">✈ EASTAR JET <span>지정좌석 구매 서비스</span></div>
+    <div class="flight">
+        <div>
+            <label>Flight</label>
+            <span id="flightNo">ZE591</span>
+        </div>
+        <div>
+            <label>Route</label>
+            <span id="route">MDC → ICN</span>
+        </div>
+        <div>
+            <label>Aircraft</label>
+            <span id="aircraft">B737-8</span>
+        </div>
+        <div>
+            <label>Time</label>
+            <span id="clock">00:00:00</span>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="left">
+        <h2>Cabin Layout</h2>
+        <div class="nose">▲</div>
+        <div class="headerSeat">
+            <div>A</div><div>B</div><div>C</div>
+            <div></div>
+            <div>D</div><div>E</div><div>F</div>
+        </div>
+        <div id="seatMap"></div>
+    </div>
+
+    <div class="right">
+        <div class="card">
+            <div class="cardHeader">
+                <h2>앞자리</h2>
+                <div class="count" id="frontCount">0 / 0</div>
+            </div>
+            <div id="frontArea"></div>
+            <div class="priceTag">가격: <span>KRW 41,000</span></div>
+        </div>
+
+        <div class="card">
+            <div class="cardHeader">
+                <h2>비상구 자리</h2>
+                <div class="count" id="exitCount">0 / 0</div>
+            </div>
+            <div id="exitArea"></div>
+            <div class="priceTag">가격: <span>KRW 41,000</span></div>
+            
+            <div class="noticeBox">
+                <div>• <strong>15열 좌석</strong>은 비상 상황 시 탈출 동선 확보를 위해 <strong>등받이가 고정</strong>되어 후방 리클라이닝이 불가합니다.</div>
+                <div class="warning-title" style="margin-top: 6px;">• 비상구 좌석 지정 불가 고객 (항공안전법 규정)</div>
+                <div>노약자, 임산부, 유아/소아 동반 고객, 만 15세 미만 고객, 반려동물을 동반한 고객 또는 비상 상황 시 승무원의 지시에 따라 신속한 대피 도우미 역할 수행이 어렵거나 한국어/영어 의사소통이 불가한 고객</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<button id="setting">⚙</button>
+
+<div id="panel">
+    <h2>관리자 패널</h2>
+    <label>
+        편명
+        <input id="flightInput" value="ZE591">
+    </label>
+    <label>
+        노선
+        <input id="routeInput" value="MDC → ICN">
+    </label>
+    <label>
+        기번
+        <input id="aircraftInput" value="B737-8">
+    </label>
+    <button id="save">정보 저장</button>
+    <button id="reset">좌석 판매 초기화</button>
+</div>
+
+<script>
+const FRONT_SEATS = ["1A","1B","1C","2D","2E","2F"];
+const EXIT_SEATS = [
+    "15A","15B","15C","15D","15E","15F",
+    "16A","16B","16C","16D","16E","16F"
+];
+const SALE_SEATS = [...FRONT_SEATS, ...EXIT_SEATS];
+
+// 💡 아이폰 사파리 개인정보 보호 모드(Private Browsing) 대응용 예외 처리
+let seatState = {};
+let infoState = { flight: "ZE591", route: "MDC → ICN", aircraft: "B737-8" };
+
+try {
+    seatState = JSON.parse(localStorage.getItem("ESSD_SEATS")) || {};
+    infoState = JSON.parse(localStorage.getItem("ESSD_INFO")) || infoState;
+} catch (e) {
+    console.log("로컬스토리지 제한 환경");
+}
+
+function safariSafeSave(key, data) {
+    try {
+        localStorage.setItem(key, JSON.stringify(data));
+    } catch(e) {
+        // 쿠키나 대체 저장소를 쓰지 않는 단순 환경이므로 무시 처리
+    }
+}
+
+function updateClock(){
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,"0");
+    const m = String(now.getMinutes()).padStart(2,"0");
+    const s = String(now.getSeconds()).padStart(2,"0");
+    document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+function isSold(seat) { return seatState[seat] === true; }
+function isSaleSeat(seat) { return SALE_SEATS.includes(seat); }
+
+function refresh() {
+    document.getElementById("flightNo").textContent = infoState.flight;
+    document.getElementById("route").textContent = infoState.route;
+    document.getElementById("aircraft").textContent = infoState.aircraft;
+    
+    drawCabin();
+    drawStructuredTiles();
+}
+
+function drawCabin(){
+    const seatMap = document.getElementById("seatMap");
+    seatMap.innerHTML = "";
+
+    for(let row=1; row<=32; row++){
+        const line = document.createElement("div");
+        line.className = "cabinRow";
+
+        ["A","B","C"].forEach(letter => {
+            line.appendChild(createCabinSeat(row + letter));
+        });
+
+        line.appendChild(document.createElement("div"));
+
+        const no = document.createElement("div");
+        no.className = "rowNo";
+        no.textContent = row;
+        line.appendChild(no);
+
+        line.appendChild(document.createElement("div"));
+
+        if(row !== 1){
+            ["D","E","F"].forEach(letter => {
+                line.appendChild(createCabinSeat(row + letter));
+            });
+        } else {
+            for(let i=0; i<3; i++) {
+                const empty = document.createElement("div");
+                empty.style.width = "26px";
+                line.appendChild(empty);
+            }
+        }
+        seatMap.appendChild(line);
+    }
+}
+
+function createCabinSeat(name){
+    const seat = document.createElement("div");
+    seat.dataset.seat = name;
+    seat.className = "cabinSeat";
+
+    if(isSaleSeat(name)){
+        seat.classList.add("sale");
+        if(isSold(name)){
+            seat.classList.remove("sale");
+            seat.classList.add("sold");
+        }
+        // 💡 iOS Touch 이벤트 최적화
+        seat.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleSeat(name);
+        });
+    }
+    return seat;
+}
+
+function drawStructuredTiles() {
+    const frontArea = document.getElementById("frontArea");
+    const exitArea = document.getElementById("exitArea");
+    
+    frontArea.innerHTML = "";
+    exitArea.innerHTML = "";
+    
+    let frontSold = 0;
+    let exitSold = 0;
+
+    const frontRow1 = document.createElement("div");
+    frontRow1.className = "tileGridRow";
+    ["1A", "1B", "1C"].forEach(name => {
+        frontRow1.appendChild(makeTile(name));
+        if(isSold(name)) frontSold++;
+    });
+    frontRow1.appendChild(createAisle());
+    for(let i=0; i<3; i++) frontRow1.appendChild(createEmptyTile());
+    frontArea.appendChild(frontRow1);
+
+    const frontRow2 = document.createElement("div");
+    frontRow2.className = "tileGridRow";
+    for(let i=0; i<3; i++) frontRow2.appendChild(createEmptyTile());
+    frontRow2.appendChild(createAisle());
+    ["2D", "2E", "2F"].forEach(name => {
+        frontRow2.appendChild(makeTile(name));
+        if(isSold(name)) frontSold++;
+    });
+    frontArea.appendChild(frontRow2);
+
+    const exitRow15 = document.createElement("div");
+    exitRow15.className = "tileGridRow";
+    ["15A", "15B", "15C"].forEach(name => {
+        exitRow15.appendChild(makeTile(name));
+        if(isSold(name)) exitSold++;
+    });
+    exitRow15.appendChild(createAisle());
+    ["15D", "15E", "15F"].forEach(name => {
+        exitRow15.appendChild(makeTile(name));
+        if(isSold(name)) exitSold++;
+    });
+    exitArea.appendChild(exitRow15);
+
+    const exitRow16 = document.createElement("div");
+    exitRow16.className = "tileGridRow";
+    ["16A", "16B", "16C"].forEach(name => {
+        exitRow16.appendChild(makeTile(name));
+        if(isSold(name)) exitSold++;
+    });
+    exitRow16.appendChild(createAisle());
+    ["16D", "16E", "16F"].forEach(name => {
+        exitRow16.appendChild(makeTile(name));
+        if(isSold(name)) exitSold++;
+    });
+    exitArea.appendChild(exitRow16);
+
+    document.getElementById("frontCount").textContent = `${FRONT_SEATS.length - frontSold} / ${FRONT_SEATS.length}`;
+    document.getElementById("exitCount").textContent = `${EXIT_SEATS.length - exitSold} / ${EXIT_SEATS.length}`;
+}
+
+function createEmptyTile() {
+    const el = document.createElement("div");
+    el.className = "emptySpace";
+    return el;
+}
+function createAisle() {
+    const el = document.createElement("div");
+    el.className = "aisleSpace";
+    return el;
+}
+
+function makeTile(name){
+    const btn = document.createElement("button");
+    btn.className = "seatTile";
+    btn.dataset.seat = name;
+
+    const icon = document.createElement("div");
+    icon.className = "icon";
+    icon.textContent = isSold(name) ? "❌" : "💺";
+
+    const seatNo = document.createElement("div");
+    seatNo.className = "seatNo";
+    seatNo.textContent = name;
+
+    btn.appendChild(icon);
+    btn.appendChild(seatNo);
+
+    if(isSold(name)){
+        btn.classList.add("sold");
+    }
+
+    // 💡 iOS Touch 이벤트 최적화
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleSeat(name);
+    });
+
+    return btn;
+}
+
+function toggleSeat(name) {
+    seatState[name] = !isSold(name);
+    safariSafeSave("ESSD_SEATS", seatState);
+    refresh();
+}
+
+const settingBtn = document.getElementById("setting");
+const panel = document.getElementById("panel");
+const saveBtn = document.getElementById("save");
+const resetBtn = document.getElementById("reset");
+
+settingBtn.onclick = () => { panel.classList.toggle("open"); };
+
+document.getElementById("flightInput").value = infoState.flight;
+document.getElementById("routeInput").value = infoState.route;
+document.getElementById("aircraftInput").value = infoState.aircraft;
+
+saveBtn.onclick = () => {
+    infoState.flight = document.getElementById("flightInput").value;
+    infoState.route = document.getElementById("routeInput").value;
+    infoState.aircraft = document.getElementById("aircraftInput").value;
+    
+    safariSafeSave("ESSD_INFO", infoState);
+    panel.classList.remove("open");
+    refresh();
+    alert("상단 비행 정보가 변경되었습니다.");
+};
+
+resetBtn.onclick = () => {
+    if(confirm("모든 좌석 판매 현황을 초기화하시겠습니까?")) {
+        seatState = {};
+        try { localStorage.removeItem("ESSD_SEATS"); } catch(e){}
+        refresh();
+    }
+};
+
+refresh();
+</script>
+</body>
+</html>
