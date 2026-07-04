@@ -161,7 +161,7 @@ main{
     display: flex;
     flex-direction: column;
     gap: 15px;
-    overflow: hidden; /* FHD 내부 스크롤 방지 */
+    overflow: hidden;
 }
 .card{
     background:white;
@@ -170,8 +170,8 @@ main{
     box-shadow:0 6px 15px rgba(0,0,0,.06);
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    min-height: 0; /* flex 자식 높이 유연화 */
+    gap: 12px;
+    min-height: 0;
 }
 .cardHeader{
     display:flex;
@@ -225,25 +225,17 @@ main{
     grid-template-columns: repeat(3, 1fr) 0.3fr repeat(3, 1fr);
     justify-content: center;
     align-items: center;
-    gap: 6px; 
-    margin-bottom: 4px; /* 1열-2열 사이 불필요 공간 완전히 압축 */
+    gap: 8px; 
     width: 100%;
-}
-.tileGridRow:last-child {
-    margin-bottom: 0;
 }
 .aisleSpace {
     width: 100%;
 }
-.emptySpace {
-    width: 100%;
-    aspect-ratio: 1.2 / 1;
-}
-/* 💡 FHD 모니터 맞춤 자동 유연 조절 */
+/* 💡 불필요한 여백 제거 및 납작함 개선 */
 .seatTile {
     width: 100%;
-    aspect-ratio: 1.2 / 1; /* 너무 납작해지지 않고 자연스러운 비율 형성 */
-    max-height: 55px;      /* 최대 높이를 줄여 화면 상하 압축 */
+    aspect-ratio: 1.1 / 1; /* 대형화면에서 정상적인 사각형 비율 보장 */
+    max-height: 70px;      /* 최대 높이 제한을 완화하여 찌그러짐 해소 */
     border-radius: 10px;
     background: #2196f3;
     color: white;
@@ -255,15 +247,15 @@ main{
     justify-content: center;
     align-items: center;
     box-shadow: 0 3px 6px rgba(0,0,0,.08);
-    padding: 4px 2px;
+    padding: 6px 4px;
 }
 .seatTile:active {
     transform: scale(0.94);
 }
 .seatTile .icon {
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
 }
 .seatTile .seatNo {
     font-size: 16px;
@@ -505,6 +497,7 @@ main{
                 </div>
                 <div class="count" id="frontCount">0 / 0</div>
             </div>
+            <!-- 💡 1열과 2열을 하나의 행으로 완벽 병합 -->
             <div id="frontArea"></div>
         </div>
 
@@ -657,26 +650,22 @@ function drawStructuredTiles() {
     let frontSold = 0;
     let exitSold = 0;
 
-    const frontRow1 = document.createElement("div");
-    frontRow1.className = "tileGridRow";
+    /* 💡 앞자리 개선: 1열(ABC)과 2열(DEF)을 공백 없이 하나의 Row에 정렬 */
+    const frontRowCombined = document.createElement("div");
+    frontRowCombined.className = "tileGridRow";
+    
     ["1A", "1B", "1C"].forEach(name => {
-        frontRow1.appendChild(makeTile(name));
+        frontRowCombined.appendChild(makeTile(name));
         if(isSold(name)) frontSold++;
     });
-    frontRow1.appendChild(createAisle());
-    for(let i=0; i<3; i++) frontRow1.appendChild(createEmptyTile());
-    frontArea.appendChild(frontRow1);
-
-    const frontRow2 = document.createElement("div");
-    frontRow2.className = "tileGridRow";
-    for(let i=0; i<3; i++) frontRow2.appendChild(createEmptyTile());
-    frontRow2.appendChild(createAisle());
+    frontRowCombined.appendChild(createAisle());
     ["2D", "2E", "2F"].forEach(name => {
-        frontRow2.appendChild(makeTile(name));
+        frontRowCombined.appendChild(makeTile(name));
         if(isSold(name)) frontSold++;
     });
-    frontArea.appendChild(frontRow2);
+    frontArea.appendChild(frontRowCombined);
 
+    /* 비상구 자리 */
     const exitRow15 = document.createElement("div");
     exitRow15.className = "tileGridRow";
     ["15A", "15B", "15C"].forEach(name => {
@@ -707,11 +696,6 @@ function drawStructuredTiles() {
     document.getElementById("exitCount").textContent = `${EXIT_SEATS.length - exitSold} / ${EXIT_SEATS.length}`;
 }
 
-function createEmptyTile() {
-    const el = document.createElement("div");
-    el.className = "emptySpace";
-    return el;
-}
 function createAisle() {
     const el = document.createElement("div");
     el.className = "aisleSpace";
