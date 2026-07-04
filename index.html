@@ -13,8 +13,8 @@
     -webkit-tap-highlight-color: transparent;
 }
 body{
-    /* Sub Color: Light Gray (R192 / G206 / B209) */
-    background:rgb(192, 206, 209);
+    /* 회색 배경을 없애고 화사하고 깔끔한 화이트 바탕 적용 */
+    background:#ffffff;
     /* Black 95% (R17 / G17 / B17) */
     color:rgb(17, 17, 17);
     overflow:hidden;
@@ -75,10 +75,10 @@ main{
 /* ================= LEFT (Cabin Layout) ================= */
 .left{
     width:38%;
-    background:white;
+    background:#fafafa;
     padding:25px;
-    /* Gray (R158 / G162 / B161) */
-    border-right:1px solid rgb(158, 162, 161);
+    /* Light Gray (R192 / G206 / B209)로 경계선 처리 */
+    border-right:1px solid rgb(192, 192, 192);
     overflow:auto;
     -webkit-overflow-scrolling: touch;
 }
@@ -121,8 +121,7 @@ main{
     font-weight:bold;
     /* Medium Gray (R86 / G90 / B91) */
     color:rgb(86, 90, 91);
-    /* Light Gray 바탕 톤 */
-    background: rgba(192, 206, 209, 0.3);
+    background: #eef2f5;
     border-radius: 4px;
     padding: 2px 0;
 }
@@ -130,8 +129,7 @@ main{
     width:26px;
     height:26px;
     border-radius:6px;
-    /* Gray (R158 / G162 / B161) */
-    background:rgb(158, 162, 161);
+    background:#e0e0e0;
     transition:.15s;
     cursor: pointer;
 }
@@ -157,34 +155,35 @@ main{
 .cabinSeat.sold::before{ transform:rotate(45deg); }
 .cabinSeat.sold::after{ transform:rotate(-45deg); }
 
-/* ================= RIGHT (EASTAR Colors) ================= */
+/* ================= RIGHT (Clean White UI) ================= */
 .right{
     flex:1;
-    padding:20px;
+    padding:25px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     overflow: hidden;
+    background: #ffffff;
 }
 .card{
-    /* Material Color: Silver (R140 / G140 / B140) 기반 알파값 조정 */
-    background: rgba(140, 140, 140, 0.15); 
+    background: #ffffff; 
+    /* Material Color: Silver (R140 / G140 / B140) 보더로 깔끔하게 윤곽선 적용 */
     border: 1px solid rgb(140, 140, 140);
     border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(48,58,60,0.1);
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 18px;
     min-height: 0;
 }
 .cardHeader{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    /* Main Red 두꺼운 언더라인 */
+    /* Main Red 두꺼운 언더라인 포인트 */
     border-bottom: 3px solid rgb(210, 0, 21); 
-    padding-bottom: 8px;
+    padding-bottom: 10px;
 }
 .titleArea {
     display: flex;
@@ -200,45 +199,45 @@ main{
     font-size: 14px;
     font-weight: bold;
     color: rgb(17, 17, 17);
-    background: rgba(255, 255, 255, 0.8);
-    padding: 3px 10px;
+    background: #f5f5f5;
+    padding: 3px 12px;
     border-radius: 6px;
-    border: 1px solid rgb(158, 162, 161);
+    border: 1px solid rgb(192, 206, 209);
 }
 .priceBadge span {
     color: rgb(210, 0, 21);
 }
 .count{
-    /* Main Red Badge */
+    /* Main Red 수량 배지 */
     background:rgb(210, 0, 21);
     color:white;
-    padding:6px 14px;
+    padding:6px 16px;
     border-radius:20px;
     font-weight:bold;
     font-size: 14px;
 }
 .noticeBox {
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 6px;
-    font-size: 11px;
+    padding: 12px;
+    background: #f9fbfc;
+    border-radius: 8px;
+    font-size: 12px;
     /* Dark Gray */
     color: rgb(48, 58, 60);
-    line-height: 1.5;
+    line-height: 1.6;
     border: 1px solid rgb(192, 206, 209);
 }
 .noticeBox .warning-title {
     /* Dark Red */
     color: rgb(142, 1, 20);
     font-weight: bold;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
 }
 
-/* ================= 벤치마킹 구조 (중앙 배치) ================= */
+/* ================= 벤치마킹 구조 (가운데 배치형) ================= */
 .benchGridContainer {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
 }
 .benchRow {
@@ -246,11 +245,11 @@ main{
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 8px;
+    gap: 10px;
 }
 .benchSide {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     flex: 1;
 }
 .benchSide.leftSide {
@@ -259,13 +258,13 @@ main{
 .benchSide.rightSide {
     justify-content: flex-start;
 }
-/* 가운데 열 번호 스타일 */
+/* 가운데 정렬되는 열 번호 스타일 */
 .benchCenterNo {
-    width: 45px;
+    width: 50px;
     text-align: center;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 800;
-    /* Dark Gray 텍스트로 가독성 부여 */
+    /* Dark Gray 색상으로 시인성 부여 */
     color: rgb(48, 58, 60);
     user-select: none;
 }
@@ -273,17 +272,17 @@ main{
     flex: 1;
 }
 
-/* 💡 이스타항공 스타일 시트 타일 */
+/* 💡 이스타항공 스타일 지정좌석 타일 */
 .seatTile {
     flex: 1;
     max-width: 90px;
-    aspect-ratio: 1.1 / 1;
+    aspect-ratio: 1.15 / 1;
     max-height: 58px;
-    border-radius: 4px;
-    /* 활성화 시 Main Red */
+    border-radius: 6px;
+    /* 구매 가능 좌석: 메인 레드(image_b97471.png 기준 앞자리/비상구 레드 지정 동일) */
     background: rgb(210, 0, 21);
     color: white;
-    border: 2px solid rgb(142, 1, 20);
+    border: 1px solid rgb(142, 1, 20);
     cursor: pointer;
     transition: transform 0.1s ease, background 0.15s;
     display: flex;
@@ -291,36 +290,37 @@ main{
     justify-content: center;
     align-items: center;
     position: relative;
-    box-shadow: 0 3px 5px rgba(48,58,60,0.15);
+    box-shadow: 0 2px 6px rgba(210,0,21,0.15);
 }
 .seatTile:active {
     transform: scale(0.94);
 }
 .seatTile .icon {
     font-size: 14px;
-    margin-bottom: 1px;
-    opacity: 0.85;
+    margin-bottom: 2px;
+    opacity: 0.9;
 }
 .seatTile .seatNo {
     font-size: 16px;
     font-weight: 900;
     line-height: 1;
 }
-/* 판매 완료 좌석: Medium/Dark Gray 조합 및 Dark Red X 마크 */
+/* 판매 완료 좌석: Medium Gray 바탕 및 Dark Red X 마크 */
 .seatTile.sold {
-    background: rgb(86, 90, 91);
+    background: rgb(158, 162, 161);
     color: rgba(255,255,255,0.3);
-    border: 2px solid rgb(48, 58, 60);
+    border: 1px solid rgb(86, 90, 91);
+    box-shadow: none;
 }
 .seatTile.sold::before, .seatTile.sold::after {
     content: "";
     position: absolute;
-    width: 80%;
+    width: 75%;
     height: 3px;
     /* Dark Red */
     background: rgb(142, 1, 20);
     top: 50%;
-    left: 10%;
+    left: 12.5%;
 }
 .seatTile.sold::before { transform: rotate(45deg); }
 .seatTile.sold::after { transform: rotate(-45deg); }
@@ -371,9 +371,9 @@ main{
     .flight { gap: 12px; }
     .flight span { font-size: 14px; }
     .left { display: none !important; }
-    .right { width: 100%; height: 100%; overflow-y: auto; padding: 10px; padding-bottom: 80px; }
-    .card { padding: 12px; }
-    .benchCenterNo { font-size: 18px; width: 30px; }
+    .right { width: 100%; height: 100%; overflow-y: auto; padding: 15px; padding-bottom: 80px; }
+    .card { padding: 16px; }
+    .benchCenterNo { font-size: 20px; width: 35px; }
     .seatTile { max-height: none; }
 }
 </style>
