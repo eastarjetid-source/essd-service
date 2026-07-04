@@ -603,11 +603,11 @@ function makeTile(name){
     btn.dataset.seat = name;
 
     const icon = document.createElement("div");
-    icon.className = "icon";
+    icon.className = "icon"; // 스타일 연결
     icon.textContent = isSold(name) ? "❌" : "💺";
 
     const seatNo = document.createElement("div");
-    seatNo.className = "seatNo";
+    seatNo.className = "seatNo"; // 스타일 연결
     seatNo.textContent = name;
 
     btn.appendChild(icon);
@@ -617,7 +617,7 @@ function makeTile(name){
         btn.classList.add("sold");
     }
 
-    // 💡 iOS Touch 이벤트 최적화
+    // iOS Touch 이벤트 최적화
     btn.addEventListener('click', (e) => {
         e.preventDefault();
         toggleSeat(name);
