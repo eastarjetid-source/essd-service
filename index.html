@@ -173,7 +173,7 @@ main{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
 .cardHeader h2{
     color:#c8102e;
@@ -198,8 +198,8 @@ main{
     font-size: 20px;
 }
 .noticeBox {
-    margin-top: 20px;
-    padding-top: 15px;
+    margin-top: 15px;
+    padding-top: 12px;
     border-top: 1px dashed #ccc;
     font-size: 12px;
     color: #666;
@@ -217,7 +217,7 @@ main{
     justify-content: center;
     align-items: center;
     gap: 8px; 
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     width: 100%;
 }
 .tileGridRow:last-child {
@@ -230,10 +230,11 @@ main{
     width: 100%;
     aspect-ratio: 1 / 1;
 }
-/* PC 좌석 타일 기본 스타일 */
+/* 💡 PC 해상도(FHD 포함) 고려 가로/세로 최적화 */
 .seatTile {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1.1 / 1; /* 대형 해상도에서 세로가 무한정 늘어나는 현상 방지 */
+    max-height: 75px;      /* FHD 환경에서 한계 높이 제어 */
     border-radius: 12px;
     background: #2196f3;
     color: white;
@@ -245,18 +246,19 @@ main{
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 10px rgba(0,0,0,.1);
-    padding: 4px;
+    padding: 6px 4px;
 }
 .seatTile:active {
     transform: scale(0.92);
 }
+/* 💡 높이 제한 보완을 위한 폰트 크기 미세 조율 */
 .seatTile .icon {
-    font-size: 32px;
-    line-height: 1;
-    margin-bottom: 2px;
+    font-size: 26px;
+    line-height: 1.1;
+    margin-bottom: 1px;
 }
 .seatTile .seatNo {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 900;
     line-height: 1;
     letter-spacing: -0.5px;
@@ -389,7 +391,10 @@ main{
         border-radius: 14px;
     }
     
-    /* 💡 모바일 아이콘 제어 수정: 기본 의자는 숨기되, 선택 완료(sold)된 ❌ 표시는 나타나도록 동적 제어 */
+    .seatTile {
+        aspect-ratio: 1 / 1;
+        max-height: none;
+    }
     .seatTile .icon {
         display: none; 
     }
@@ -400,7 +405,6 @@ main{
         line-height: 1;
     }
     
-    /* 판매 가능 상태일 때는 번호가 꽉 차게, 판매되었을 때는 X 밑에 이쁘게 안착 */
     .seatTile .seatNo {
         font-size: 20px; 
         font-weight: 900;
@@ -414,7 +418,7 @@ main{
     }
     .seatTile.sold .seatNo {
         height: auto;
-        font-size: 14px; /* X 표시가 크게 뜨므로 글자크기를 하단 가독성에 맞춤 */
+        font-size: 14px; 
         color: #d32f2f;
         margin-top: 2px;
     }
