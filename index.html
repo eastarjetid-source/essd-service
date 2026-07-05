@@ -83,31 +83,31 @@ main{ display:flex; height:calc(100vh - 80px); }
 
 /* ================= LEFT (Cabin Layout) ================= */
 .left{
-    width:42%; background:#f4f7f9; padding:30px 20px; border-right:1px solid rgb(192, 192, 192);
+    width:35%; background:#f4f7f9; padding:30px 20px; border-right:1px solid rgb(192, 192, 192);
     overflow:auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; align-items: center;
 }
 .left h2{ color:rgb(210, 0, 21); text-align:center; margin-bottom:25px; font-size: 20px; }
 .airplane-body {
     background: #ffffff; border: 3px solid rgb(158, 162, 161); border-top-left-radius: 120px 200px; border-top-right-radius: 120px 200px;
-    padding: 60px 20px 40px 20px; width: 100%; max-width: 380px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    padding: 60px 25px 40px 25px; width: 100%; max-width: 400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 .cockpit { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
 .cockpit-window { width: 35px; height: 14px; background: rgb(48, 58, 60); border-radius: 3px; }
 .cockpit-window.left-w { transform: skewY(-10deg); border-top-left-radius: 8px;}
 .cockpit-window.right-w { transform: skewY(10deg); border-top-right-radius: 8px;}
-.headerSeat{ display:grid; grid-template-columns: 28px 28px 28px 40px 28px 28px 28px; justify-content:center; gap:6px; margin-bottom:15px; font-weight:bold; text-align: center; color:rgb(48, 58, 60); font-size: 14px; }
-#seatMap{ display:flex; flex-direction:column; gap:7px; position: relative; }
-.cabinRow{ display:grid; grid-template-columns: 28px 28px 28px 40px 28px 28px 28px; justify-content:center; align-items:center; gap:6px; position: relative; }
-.rowNo{ text-align:center; font-size:12px; font-weight:bold; color:rgb(86, 90, 91); background: #eef2f5; border-radius: 4px; padding: 3px 0; position: relative; }
+.headerSeat{ display:grid; grid-template-columns: 32px 32px 32px 45px 32px 32px 32px; justify-content:center; gap:8px; margin-bottom:15px; font-weight:bold; text-align: center; color:rgb(48, 58, 60); font-size: 15px; }
+#seatMap{ display:flex; flex-direction:column; gap:8px; position: relative; }
+.cabinRow{ display:grid; grid-template-columns: 32px 32px 32px 45px 32px 32px 32px; justify-content:center; align-items:center; gap:8px; position: relative; }
+.rowNo{ text-align:center; font-size:13px; font-weight:bold; color:rgb(86, 90, 91); background: #eef2f5; border-radius: 4px; padding: 4px 0; position: relative; }
 
-.exit-gate { position: absolute; top: 50%; transform: translateY(-50%); font-size: 10px; font-weight: bold; color: rgb(142, 1, 20); white-space: nowrap; pointer-events: none; }
-.exit-gate.left-gate { left: -52px; } 
-.exit-gate.right-gate { right: -52px; } 
+.exit-gate { position: absolute; top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: bold; color: rgb(142, 1, 20); white-space: nowrap; pointer-events: none; }
+.exit-gate.left-gate { left: -58px; } 
+.exit-gate.right-gate { right: -58px; } 
 
-.cabinSeat{ width:28px; height:28px; border-radius:6px; background:#e0e0e0; transition:.15s; cursor: pointer; }
+.cabinSeat{ width:32px; height:32px; border-radius:6px; background:#e0e0e0; transition:.15s; cursor: pointer; }
 .cabinSeat.sale{ background: rgb(126, 206, 244); }
 .cabinSeat.sold{ background:white; border:2px solid rgb(142, 1, 20); position:relative; }
-.cabinSeat.sold::before, .cabinSeat.sold::after{ content:""; position:absolute; left:3px; right:3px; top:11px; height:2px; background:rgb(142, 1, 20); }
+.cabinSeat.sold::before, .cabinSeat.sold::after{ content:""; position:absolute; left:4px; right:4px; top:13px; height:2px; background:rgb(142, 1, 20); }
 .cabinSeat.sold::before{ transform:rotate(45deg); }
 .cabinSeat.sold::after{ transform:rotate(-45deg); }
 
@@ -187,10 +187,10 @@ main{ display:flex; height:calc(100vh - 80px); }
     .seatTile .seatNo { font-size: 15px; }
 }
 
-/* ================= 🖨️ PERFECT BALANCE PRINT OPTIMIZATION ================= */
+/* ================= 🖨️ PERFECT 19-ROW PRINT OPTIMIZATION ================= */
 @page {
     size: landscape; 
-    margin: 4mm 6mm; 
+    margin: 5mm 7mm; 
 }
 
 @media print {
@@ -201,8 +201,7 @@ main{ display:flex; height:calc(100vh - 80px); }
         position: static !important;
     }
     body {
-        /* 크롬/웨일 가로 해상도에 맞춰 압축률 안정화 */
-        zoom: 0.81 !important; 
+        zoom: 0.88 !important; /* 19열 최적화 스케일업 */
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         background: #ffffff !important;
@@ -222,68 +221,68 @@ main{ display:flex; height:calc(100vh - 80px); }
         width: 100% !important;
     }
     
-    /* ✈️ 왼쪽 캐빈 도면 영역: 밸런스를 맞추기 위해 너비 확장 (25% -> 32%) */
+    /* ✈️ 왼쪽 단축형 캐빈 도면 영역: 19열 기준 황금 밸런스 설정 (35% 할당) */
     .left {
         display: flex !important; 
-        width: 32% !important;
+        width: 35% !important;
         height: 100% !important;
         background: #f4f7f9 !important;
-        padding: 8px 10px !important;
+        padding: 12px 15px !important;
         border-right: 1px solid rgb(192, 192, 192) !important;
         overflow: visible !important;
     }
-    .left h2 { margin-bottom: 6px !important; font-size: 15px !important; }
+    .left h2 { margin-bottom: 12px !important; font-size: 16px !important; }
     
-    /* 비행기 몸통 가로폭 대폭 확대 (왜소해 보이지 않게 균형 조정) */
+    /* 19열까지 압축 해제된 크고 넓은 기체 디자인 구현 */
     .airplane-body {
-        max-width: 235px !important;
-        padding: 30px 8px 15px 8px !important;
+        max-width: 280px !important;
+        padding: 40px 12px 25px 12px !important;
         border-width: 2px !important;
     }
-    .cockpit { top: 10px !important; }
-    .cockpit-window { width: 26px !important; height: 10px !important; }
+    .cockpit { top: 12px !important; }
+    .cockpit-window { width: 30px !important; height: 11px !important; }
     
-    /* 좌석 내부 배치 요소 크기 스케일 업 */
-    #seatMap { gap: 1.5px !important; }
-    .cabinRow { gap: 3.5px !important; grid-template-columns: 20px 20px 20px 26px 20px 20px 20px !important;}
-    .cabinSeat { width: 20px !important; height: 18px !important; border-radius: 3px !important; border-width: 1px !important; }
-    .cabinSeat.sold::before, .cabinSeat.sold::after { top: 7px !important; height: 1.5px !important; }
+    /* 19열 제한에 맞춰 각 좌석의 크기를 대폭 늘려 균형 유지 */
+    #seatMap { gap: 3px !important; }
+    .cabinRow { gap: 5px !important; grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important;}
+    .cabinSeat { width: 24px !important; height: 24px !important; border-radius: 4px !important; border-width: 1.5px !important; }
+    .cabinSeat.sold::before, .cabinSeat.sold::after { top: 10px !important; height: 1.5px !important; left: 2px !important; right: 2px !important; }
     
-    .rowNo { font-size: 9px !important; padding: 1px 0 !important; }
-    .headerSeat { grid-template-columns: 20px 20px 20px 26px 20px 20px 20px !important; gap: 3.5px !important; font-size: 11px !important; margin-bottom: 5px !important; }
+    .rowNo { font-size: 11px !important; padding: 2px 0 !important; }
+    .headerSeat { grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important; gap: 5px !important; font-size: 13px !important; margin-bottom: 8px !important; }
     
-    /* 비상구 글자가 확장된 기체 옆에 알맞게 밀착되도록 좌표 보정 */
-    .exit-gate { font-size: 8px !important; font-weight: 900 !important; }
-    .exit-gate.left-gate { left: -42px !important; } 
-    .exit-gate.right-gate { right: -42px !important; }
+    /* 15, 16열 비상구 텍스트 위치 완벽 조율 */
+    .exit-gate { font-size: 9px !important; font-weight: 900 !important; }
+    .exit-gate.left-gate { left: -46px !important; } 
+    .exit-gate.right-gate { right: -46px !important; }
 
-    /* 📊 오른쪽 타일 영역: 비율 조절 (75% -> 68%) */
+    /* 📊 오른쪽 타일 영역 */
     .right {
         display: flex !important;
-        width: 68% !important;
+        width: 65% !important;
         height: 100% !important;
         padding: 0px 0px 0px 15px !important;
         overflow: visible !important;
         flex-direction: column !important;
-        gap: 6px !important;
+        gap: 8px !important;
     }
     .card {
         border: 1px solid rgb(215, 225, 230) !important;
         box-shadow: none !important;
-        padding: 10px 16px !important;
-        gap: 6px !important;
+        padding: 12px 18px !important;
+        gap: 8px !important;
         flex: 1 !important; 
     }
     .cardHeader {
         border-bottom: 3px solid rgb(126, 206, 244) !important;
-        padding-bottom: 3px !important;
+        padding-bottom: 4px !important;
     }
-    .cardHeader h2 { font-size: 18px !important; }
+    .cardHeader h2 { font-size: 19px !important; }
     .priceBadge { font-size: 12px !important; padding: 1px 8px !important; }
     .count { font-size: 12px !important; padding: 3px 12px !important; }
     
     .benchGridContainer {
-        gap: 10px !important; 
+        gap: 12px !important; 
         flex: 1 !important;
         justify-content: center !important;
     }
@@ -332,7 +331,7 @@ main{ display:flex; height:calc(100vh - 80px); }
 
 <main class="view-tiles" id="mainContainer">
     <div class="left">
-        <h2>Cabin Layout</h2>
+        <h2>Cabin Layout (1-19)</h2>
         <div class="airplane-body">
             <div class="cockpit"><div class="cockpit-window left-w"></div><div class="cockpit-window right-w"></div></div>
             <div class="headerSeat"><div>A</div><div>B</div><div>C</div><div></div><div>D</div><div>E</div><div>F</div></div>
@@ -439,12 +438,14 @@ function refresh() {
 function drawCabin(){
     const seatMap = document.getElementById("seatMap");
     seatMap.innerHTML = "";
-    for(let row=1; row<=32; row++){
+    
+    // 유저의 요청대로 19열까지만 루프를 돌며 드로잉 및 출력하도록 제한
+    for(let row=1; row<=19; row++){
         const line = document.createElement("div"); line.className = "cabinRow";
         ["A","B","C"].forEach(l => line.appendChild(createCabinSeat(row+l)));
         const no = document.createElement("div"); no.className = "rowNo"; no.textContent = row; line.appendChild(no);
         if(row !== 1){ ["D","E","F"].forEach(l => line.appendChild(createCabinSeat(row+l))); } 
-        else { for(let i=0; i<3; i++) { const emp = document.createElement("div"); emp.style.width = "28px"; line.appendChild(emp); } }
+        else { for(let i=0; i<3; i++) { const emp = document.createElement("div"); emp.style.width = "32px"; line.appendChild(emp); } }
         if(row === 15 || row === 16) {
             const leftGate = document.createElement("div"); leftGate.className = "exit-gate left-gate"; leftGate.textContent = "← EXIT ⚠️";
             const rightGate = document.createElement("div"); rightGate.className = "exit-gate right-gate"; rightGate.textContent = "⚠️ EXIT →";
