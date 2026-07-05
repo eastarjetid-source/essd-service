@@ -83,16 +83,18 @@ main{ display:flex; height:calc(100vh - 80px); }
 
 /* ================= LEFT (Cabin Layout) ================= */
 .left{
-    width:35%; background:#f4f7f9; padding:25px 20px; border-right:1px solid rgb(192, 192, 192);
+    width:35%; background:#f4f7f9; padding:20px; border-right:1px solid rgb(192, 192, 192);
     overflow:auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; align-items: center;
 }
-.left h2{ color:rgb(210, 0, 21); text-align:center; margin-bottom:20px; font-size: 20px; }
+.left h2{ color:rgb(210, 0, 21); text-align:center; margin-bottom:15px; font-size: 20px; }
 
-/* 🌟 기체 내 좌석 뚫림 방지: 상하단 유연 분배 배치 적용 */
+/* 🌟 기체 뚫림 완벽 방지 및 32열 밑 기체 하단 곡선으로 밀폐 폐쇄 */
 .airplane-body {
-    background: #ffffff; border: 3px solid rgb(158, 162, 161); border-top-left-radius: 120px 200px; border-top-right-radius: 120px 200px;
-    padding: 60px 25px 35px 25px; width: 100%; max-width: 400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 0;
+    background: #ffffff; border: 3px solid rgb(158, 162, 161); 
+    border-top-left-radius: 120px 200px; border-top-right-radius: 120px 200px;
+    border-bottom-left-radius: 40px 80px; border-bottom-right-radius: 40px 80px; /* 32열 밑을 예쁘게 모아 닫아줌 */
+    padding: 60px 25px 25px 25px; width: 100%; max-width: 400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    display: flex; flex-direction: column; min-height: min-content;
 }
 .cockpit { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
 .cockpit-window { width: 35px; height: 14px; background: rgb(48, 58, 60); border-radius: 3px; }
@@ -100,19 +102,17 @@ main{ display:flex; height:calc(100vh - 80px); }
 .cockpit-window.right-w { transform: skewY(10deg); border-top-right-radius: 8px;}
 .headerSeat{ display:grid; grid-template-columns: 32px 32px 32px 45px 32px 32px 32px; justify-content:center; gap:8px; margin-bottom:10px; font-weight:bold; text-align: center; color:rgb(48, 58, 60); font-size: 15px; }
 
-/* 🌟 고정 높이 대신 내부 컨텐츠 비율대로 꽉 채우기 */
-#seatMap{ display:flex; flex-direction:column; justify-content: space-between; gap:4px; position: relative; flex: 1; min-height: 0; }
+/* 🌟 내부 스케일링 간격 최적화 */
+#seatMap{ display:flex; flex-direction:column; gap:5px; position: relative; }
 .cabinRow{ display:grid; grid-template-columns: 32px 32px 32px 45px 32px 32px 32px; justify-content:center; align-items:center; gap:8px; position: relative; }
 .rowNo{ text-align:center; font-size:13px; font-weight:bold; color:rgb(86, 90, 91); background: #eef2f5; border-radius: 4px; padding: 4px 0; position: relative; }
 
-/* 🌟 스킵 영역 가변 최소 높이 조정으로 뚫림 원천 차단 */
 .skip-row {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 40px;
-    flex: 1; 
-    min-height: 30px;
+    height: 35px;
     margin: 4px 0;
     color: rgb(158, 162, 161);
     font-size: 16px;
@@ -138,7 +138,7 @@ main{ display:flex; height:calc(100vh - 80px); }
 .cabinSeat.sold::before{ transform:rotate(45deg); }
 .cabinSeat.sold::after{ transform:rotate(-45deg); }
 
-/* ================= RIGHT (오른쪽 100% 꽉 채우기 공통 설정) ================= */
+/* ================= RIGHT (오른쪽 100% 대형 스케일 유지) ================= */
 .right{ flex:1; padding:20px; display: flex; flex-direction: column; gap: 15px; overflow: hidden; background: #ffffff; }
 .card{ background: #ffffff; border: 1px solid rgb(215, 225, 230); border-radius: 12px; padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 15px; min-height: 0; }
 .cardHeader{ display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid rgb(126, 206, 244); padding-bottom: 8px; }
@@ -152,13 +152,12 @@ main{ display:flex; height:calc(100vh - 80px); }
 
 .benchGridContainer { display: flex; flex-direction: column; gap: 10px; width: 100%; }
 .benchRow { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 12px; }
-.benchSide { display: flex; gap: 10px; flex: 1; width: calc(50% - 25px); } /* 좌우 세트가 절반 균등 분할하도록 */
+.benchSide { display: flex; gap: 10px; flex: 1; width: calc(50% - 25px); }
 .benchSide.leftSide { justify-content: flex-end; }
 .benchSide.rightSide { justify-content: flex-start; }
 .benchCenterNo { width: 50px; text-align: center; font-size: 20px; font-weight: 800; color: rgb(48, 58, 60); user-select: none; }
-.emptyPlaceholder { flex: 1; visibility: hidden; } /* 자리 채우기용 보이지 않는 안보이는 조각 */
+.emptyPlaceholder { flex: 1; visibility: hidden; }
 
-/* 🌟 와이드 화면 꽉 채우기: max-width 해제 및 flex 기반 크기 가변화 */
 .seatTile {
     flex: 1; width: 100%; min-height: 56px; aspect-ratio: 1.4 / 1; border-radius: 6px;
     background: rgb(126, 206, 244); color: rgb(48, 58, 60); border: 1px solid rgb(96, 176, 214);
@@ -260,17 +259,20 @@ main{ display:flex; height:calc(100vh - 80px); }
     }
     .left h2 { margin-bottom: 10px !important; font-size: 16px !important; }
     
+    /* 인쇄 시에도 32열 밑을 딱 맞게 조이고 하단 공백 제거 */
     .airplane-body {
         max-width: 290px !important;
-        padding: 40px 15px 25px 15px !important;
+        padding: 40px 15px 20px 15px !important;
         border-width: 2.5px !important;
-        flex: 1 !important; 
-        justify-content: space-between !important;
+        border-bottom-left-radius: 40px 80px !important;
+        border-bottom-right-radius: 40px 80px !important;
+        flex: none !important; /* 아래 빈 공간을 강제 생성하지 않도록 변경 */
+        height: auto !important;
     }
     .cockpit { top: 14px !important; }
     .cockpit-window { width: 30px !important; height: 11px !important; }
     
-    #seatMap { gap: 2px !important; flex: 1 !important; justify-content: space-between !important;}
+    #seatMap { gap: 4px !important; }
     .cabinRow { gap: 6px !important; grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important;}
     .cabinSeat { width: 24px !important; height: 24px !important; border-radius: 5px !important; }
     .cabinSeat.sold::before, .cabinSeat.sold::after { top: 10px !important; height: 1.5px !important; left: 3px !important; right: 3px !important; }
@@ -279,9 +281,8 @@ main{ display:flex; height:calc(100vh - 80px); }
     .headerSeat { grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important; gap: 6px !important; font-size: 13px !important; margin-bottom: 4px !important; }
     
     .skip-row { 
-        flex: 1 !important; 
-        min-height: 25px !important;
-        margin: 2px 0 !important; 
+        height: 35px !important;
+        margin: 4px 0 !important; 
         font-size: 14px !important; 
         gap: 20px !important; 
     }
@@ -291,7 +292,7 @@ main{ display:flex; height:calc(100vh - 80px); }
     .exit-gate.left-gate { left: -48px !important; } 
     .exit-gate.right-gate { right: -48px !important; }
 
-    /* 우측 레이아웃 인쇄도 시원하게 100% 반영 고수 */
+    /* 우측 100% 꽉 채운 레이아웃 인쇄 동기화 */
     .right {
         display: flex !important;
         width: 65% !important;
@@ -349,10 +350,8 @@ main{ display:flex; height:calc(100vh - 80px); }
         <h2>Cabin Layout (1-32)</h2>
         <div class="airplane-body">
             <div class="cockpit"><div class="cockpit-window left-w"></div><div class="cockpit-window right-w"></div></div>
-            <div>
-                <div class="headerSeat"><div>A</div><div>B</div><div>C</div><div></div><div>D</div><div>E</div><div>F</div></div>
-                <div id="seatMap"></div>
-            </div>
+            <div class="headerSeat"><div>A</div><div>B</div><div>C</div><div></div><div>D</div><div>E</div><div>F</div></div>
+            <div id="seatMap"></div>
         </div>
     </div>
 
