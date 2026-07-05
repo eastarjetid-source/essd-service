@@ -136,7 +136,7 @@ main{ display:flex; height:calc(100vh - 80px); }
 .cabinSeat.sold::before{ transform:rotate(45deg); }
 .cabinSeat.sold::after{ transform:rotate(-45deg); }
 
-/* ================= RIGHT (오른쪽 대형 스케일 및 반응형 폰트 추가) ================= */
+/* ================= RIGHT (오른쪽 좌석 타일 영역) ================= */
 .right{ flex:1; padding:20px; display: flex; flex-direction: column; gap: 15px; overflow: hidden; background: #ffffff; }
 .card{ background: #ffffff; border: 1px solid rgb(215, 225, 230); border-radius: 12px; padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 15px; min-height: 0; }
 .cardHeader{ display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid rgb(126, 206, 244); padding-bottom: 8px; }
@@ -153,30 +153,35 @@ main{ display:flex; height:calc(100vh - 80px); }
 .benchSide { display: flex; gap: 10px; flex: 1; width: calc(50% - 25px); }
 .benchSide.leftSide { justify-content: flex-end; }
 .benchSide.rightSide { justify-content: flex-start; }
-.benchCenterNo { width: 50px; text-align: center; font-size: clamp(18px, calc(12px + 0.6vw), 26px); font-weight: 800; color: rgb(48, 58, 60); user-select: none; }
+.benchCenterNo { width: 50px; text-align: center; font-size: clamp(20px, calc(14px + 0.8vw), 32px); font-weight: 800; color: rgb(48, 58, 60); user-select: none; }
 .emptyPlaceholder { flex: 1; visibility: hidden; }
 
-/* 🌟 타일 크기가 커지면 글씨도 화면 비율(vw)에 맞춰 커지도록 세팅 */
+/* 🌟 FHD 스크린에서 타일 덩치에 밀리지 않도록 글씨 스케일 대폭 강화 */
 .seatTile {
-    flex: 1; width: 100%; min-height: 56px; aspect-ratio: 1.4 / 1; border-radius: 6px;
+    flex: 1; width: 100%; min-height: 65px; aspect-ratio: 1.4 / 1; border-radius: 8px;
     background: rgb(126, 206, 244); color: rgb(48, 58, 60); border: 1px solid rgb(96, 176, 214);
     cursor: pointer; transition: transform 0.1s ease, background 0.15s; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; box-shadow: 0 2px 5px rgba(126,206,244,0.15);
 }
 .seatTile:active { transform: scale(0.95); }
+
+/* 💺 의자 아이콘 크기 확장 */
 .seatTile .icon { 
-    font-size: clamp(12px, calc(8px + 0.4vw), 20px); /* 타일 확대 시 아이콘 동반 확대 */
-    margin-bottom: 2px; 
-    opacity: 0.9; 
+    font-size: clamp(16px, calc(10px + 0.8vw), 40px); 
+    margin-bottom: 4px; 
+    opacity: 0.95; 
 }
+/* 🔤 좌석 번호 글자 크기 확장 */
 .seatTile .seatNo { 
-    font-size: clamp(15px, calc(10px + 0.5vw), 24px); /* FHD 전체화면 시 시원하게 글자 크기 보정 */
-    font-weight: bold; 
+    font-size: clamp(18px, calc(12px + 1.0vw), 36px); 
+    font-weight: 800; 
     line-height: 1; 
 }
-.seatTile.sold { background: rgb(158, 162, 161); color: rgba(255,255,255,0.3); border: 1px solid rgb(86, 90, 91); box-shadow: none; }
-.seatTile.sold::before, .seatTile.sold::after { content: ""; position: absolute; width: 75%; height: 2px; background: rgb(142, 1, 20); top: 50%; left: 12.5%; }
-.seatTile.sold::before { transform: rotate(45deg); }
-.seatTile.sold::after { transform: rotate(-45deg); }
+
+/* Sold 좌석 상태 변경 (X 표시 두께 강화) */
+.seatTile.sold { background: rgb(158, 162, 161); color: rgba(255,255,255,0.2); border: 1px solid rgb(86, 90, 91); box-shadow: none; }
+.seatTile.sold::before, .seatTile.sold::after { content: ""; position: absolute; width: 80%; height: 4px; background: rgb(142, 1, 20); top: 50%; left: 10%; }
+.seatTile.sold::before { transform: translateY(-50%) rotate(45deg); }
+.seatTile.sold::after { transform: translateY(-50%) rotate(-45deg); }
 
 #setting { 
     position:fixed; right:25px; bottom:25px; width:60px; height:60px; border-radius:50%; border:none; 
@@ -216,9 +221,10 @@ main{ display:flex; height:calc(100vh - 80px); }
 
     .card { padding: 16px; }
     .benchCenterNo { font-size: 18px !important; width: 35px; }
-    .seatTile { min-height: 48px; aspect-ratio: auto; }
+    .seatTile { min-height: 48px; aspect-ratio: auto; border-radius: 6px; }
     .seatTile .icon { display: none !important; }
     .seatTile .seatNo { font-size: 15px !important; }
+    .seatTile.sold::before, .seatTile.sold::after { height: 2px; }
 }
 
 /* ================= 🖨️ PERFECT PRINT OPTIMIZATION ================= */
