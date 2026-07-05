@@ -120,7 +120,12 @@ main{ display:flex; height:calc(100vh - 80px); }
 .seatTile.sold::before { transform: rotate(45deg); }
 .seatTile.sold::after { transform: rotate(-45deg); }
 
-#setting { position:fixed; right:25px; bottom:25px; width:60px; height:60px; border-radius:50%; border:none; background: rgb(126, 206, 244); color: rgb(48, 58, 60); font-size:28px; cursor:pointer; box-shadow:0 6px 15px rgba(0,0,0,.15); z-index:999; }
+/* ⚙️ 톱니바퀴 버튼 이스타 레드 색상 적용 */
+#setting { 
+    position:fixed; right:25px; bottom:25px; width:60px; height:60px; border-radius:50%; border:none; 
+    background: rgb(210, 0, 21); /* 이스타 레드 */
+    color: white; font-size:28px; cursor:pointer; box-shadow:0 6px 15px rgba(0,0,0,.15); z-index:999; 
+}
 #panel { position:fixed; top:80px; right:-340px; width:320px; height:calc(100vh - 80px); background:white; transition:.25s; padding:25px; box-shadow:-5px 0 15px rgba(0,0,0,.15); overflow:auto; z-index:998; }
 #panel.open{ right:0; }
 #panel h2{ color: rgb(48, 58, 60); margin-bottom:20px; }
@@ -146,7 +151,7 @@ main{ display:flex; height:calc(100vh - 80px); }
     .seatTile .seatNo { font-size: 15px; }
 }
 
-/* ================= 🖨️ 인쇄 전용 스타일 시트 ================= */
+/* ================= 🖨️ 인쇄 모드 최적화 (PC 전체 100% 반영) ================= */
 @media print {
     body, main {
         position: static !important;
@@ -154,27 +159,50 @@ main{ display:flex; height:calc(100vh - 80px); }
         height: auto !important;
         background: #fff !important;
     }
-    header, #setting, #panel, .print-btn, .noticeBox {
-        display: none !important; /* 인쇄 시 관리 버튼 및 안내 박스 숨김 */
+    /* 인쇄 시 시계 영역 숨김 처리 */
+    .time-box, #setting, #panel, .print-btn, .noticeBox {
+        display: none !important; 
+    }
+    header {
+        height: 70px !important;
+        background: rgb(210, 0, 21) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
     main {
-        display: block !important;
+        display: flex !important; /* 모바일 반응형으로 변하지 않고 PC의 좌/우 분할 레이아웃 강제 유지 */
+        flex-direction: row !important;
+        height: auto !important;
     }
     .left {
-        display: none !important; /* 인쇄 용지에는 우측의 큰 바둑판 타일 배열만 나오도록 왼쪽 레이아웃 숨김 */
+        display: flex !important; /* 비행기 도면 인쇄 강제 허용 */
+        width: 35% !important;
+        background: #f4f7f9 !important;
+        padding: 15px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .airplane-body {
+        max-width: 290px !important;
+        padding: 30px 10px 20px 10px !important;
     }
     .right {
-        width: 100% !important;
-        padding: 0 !important;
+        width: 65% !important;
+        padding: 15px !important;
+        overflow: visible !important;
     }
     .card {
-        border: 2px solid #000 !important;
+        border: 1px solid rgb(215, 225, 230) !important;
         box-shadow: none !important;
         page-break-inside: avoid;
-        margin-bottom: 30px;
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+    }
+    .cardHeader {
+        border-bottom: 3px solid rgb(126, 206, 244) !important;
     }
     .seatTile {
-        -webkit-print-color-adjust: exact !important; /* 브라우저 인쇄 시 배경 색상 강제 유지 */
+        -webkit-print-color-adjust: exact !important; 
         print-color-adjust: exact !important;
     }
 }
@@ -191,8 +219,8 @@ main{ display:flex; height:calc(100vh - 80px); }
         <div><label>Flight</label><span id="flightNo">ZE536</span></div>
         <div><label>Route</label><span id="route">MDC → ICN</span></div>
         <div><label>Aircraft</label><span id="aircraft">B737-8</span></div>
-        <div><label>Time</label><span id="clock">00:00:00</span></div>
-        <!-- 인쇄 버튼 -->
+        <!-- 시계 영역에 클래스 추가하여 인쇄 제어 -->
+        <div class="time-box"><label>Time</label><span id="clock">00:00:00</span></div>
         <button class="print-btn" onclick="window.print()">🖨️ 현황판 인쇄</button>
     </div>
 </header>
@@ -242,6 +270,9 @@ main{ display:flex; height:calc(100vh - 80px); }
 
 <div id="panel">
     <h2>관리자 패널</h2>
+    <!-- 수정 불가 비활성화(disabled) 형태로 Flight, Route 복구 -->
+    <label>편명<input id="flightInput" value="ZE536" disabled style="background:#f0f0f0; color:#999; cursor:not-allowed;"></label>
+    <label>노선<input id="routeInput" value="MDC → ICN" disabled style="background:#f0f0f0; color:#999; cursor:not-allowed;"></label>
     <label>기종<input id="aircraftInput" value="B737-8"></label>
     <button id="save">정보 저장</button>
     <button id="reset">좌석 판매 초기화</button>
