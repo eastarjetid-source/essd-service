@@ -35,348 +35,93 @@ header{
     align-items: center;
     gap: 12px;
 }
-.logo .brand {
-    font-size:24px;
-    font-weight:900;
-    letter-spacing: -0.5px;
+.logo .brand { font-size:24px; font-weight:900; letter-spacing: -0.5px; }
+.logo .sub-title { font-size:18px; font-weight:normal; opacity:0.9; letter-spacing:-0.5px; border-left: 1px solid rgba(255,255,255,0.4); padding-left: 12px; }
+.flight{ display:flex; gap:35px; align-items: center; }
+.flight div{ text-align:center; }
+.flight label{ display:block; font-size:12px; opacity:.8; }
+.flight span{ font-size:22px; font-weight:bold; }
+
+/* 🖨️ 인쇄 버튼 스타일 */
+.print-btn {
+    background: #ffffff;
+    color: rgb(210, 0, 21);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: background 0.2s;
 }
-.logo .sub-title {
-    font-size:18px;
-    font-weight:normal;
-    opacity:0.9;
-    letter-spacing:-0.5px;
-    border-left: 1px solid rgba(255,255,255,0.4);
-    padding-left: 12px;
-}
-.flight{
-    display:flex;
-    gap:35px;
-}
-.flight div{
-    text-align:center;
-}
-.flight label{
-    display:block;
-    font-size:12px;
-    opacity:.8;
-}
-.flight span{
-    font-size:22px;
-    font-weight:bold;
-}
-/* ================= MAIN ================= */
-main{
-    display:flex;
-    height:calc(100vh - 80px);
-}
+.print-btn:hover { background: #f5f5f5; }
+
+main{ display:flex; height:calc(100vh - 80px); }
+
 /* ================= LEFT (Cabin Layout) ================= */
 .left{
-    width:42%;
-    background:#f4f7f9;
-    padding:30px 20px;
-    border-right:1px solid rgb(192, 192, 192);
-    overflow:auto;
-    -webkit-overflow-scrolling: touch;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width:42%; background:#f4f7f9; padding:30px 20px; border-right:1px solid rgb(192, 192, 192);
+    overflow:auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; align-items: center;
 }
-.left h2{
-    color:rgb(210, 0, 21);
-    text-align:center;
-    margin-bottom:25px;
-    font-size: 20px;
-}
-
+.left h2{ color:rgb(210, 0, 21); text-align:center; margin-bottom:25px; font-size: 20px; }
 .airplane-body {
-    background: #ffffff;
-    border: 3px solid rgb(158, 162, 161);
-    border-top-left-radius: 120px 200px;
-    border-top-right-radius: 120px 200px;
-    padding: 60px 20px 40px 20px;
-    width: 100%;
-    max-width: 380px;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    background: #ffffff; border: 3px solid rgb(158, 162, 161); border-top-left-radius: 120px 200px; border-top-right-radius: 120px 200px;
+    padding: 60px 20px 40px 20px; width: 100%; max-width: 380px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
-.cockpit {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 6px;
-}
-.cockpit-window {
-    width: 35px;
-    height: 14px;
-    background: rgb(48, 58, 60);
-    border-radius: 3px;
-}
+.cockpit { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+.cockpit-window { width: 35px; height: 14px; background: rgb(48, 58, 60); border-radius: 3px; }
 .cockpit-window.left-w { transform: skewY(-10deg); border-top-left-radius: 8px;}
 .cockpit-window.right-w { transform: skewY(10deg); border-top-right-radius: 8px;}
-
-.headerSeat{
-    display:grid;
-    grid-template-columns: 28px 28px 28px 40px 28px 28px 28px;
-    justify-content:center;
-    gap:6px;
-    margin-bottom:15px;
-    font-weight:bold;
-    text-align: center;
-    color:rgb(48, 58, 60);
-    font-size: 14px;
-}
-
-#seatMap{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-    position: relative;
-}
-
-.cabinRow{
-    display:grid;
-    grid-template-columns: 28px 28px 28px 40px 28px 28px 28px;
-    justify-content:center;
-    align-items:center;
-    gap:6px;
-    position: relative;
-}
-
-.rowNo{
-    text-align:center;
-    font-size:12px;
-    font-weight:bold;
-    color:rgb(86, 90, 91);
-    background: #eef2f5;
-    border-radius: 4px;
-    padding: 3px 0;
-    position: relative;
-}
-
-.exit-gate {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 10px;
-    font-weight: bold;
-    color: rgb(142, 1, 20);
-    white-space: nowrap;
-    pointer-events: none;
-}
+.headerSeat{ display:grid; grid-template-columns: 28px 28px 28px 40px 28px 28px 28px; justify-content:center; gap:6px; margin-bottom:15px; font-weight:bold; text-align: center; color:rgb(48, 58, 60); font-size: 14px; }
+#seatMap{ display:flex; flex-direction:column; gap:7px; position: relative; }
+.cabinRow{ display:grid; grid-template-columns: 28px 28px 28px 40px 28px 28px 28px; justify-content:center; align-items:center; gap:6px; position: relative; }
+.rowNo{ text-align:center; font-size:12px; font-weight:bold; color:rgb(86, 90, 91); background: #eef2f5; border-radius: 4px; padding: 3px 0; position: relative; }
+.exit-gate { position: absolute; top: 50%; transform: translateY(-50%); font-size: 10px; font-weight: bold; color: rgb(142, 1, 20); white-space: nowrap; pointer-events: none; }
 .exit-gate.left-gate { left: -65px; } 
 .exit-gate.right-gate { right: -65px; } 
-
-.cabinSeat{
-    width:28px;
-    height:28px;
-    border-radius:6px;
-    background:#e0e0e0;
-    transition:.15s;
-    cursor: pointer;
-}
-.cabinSeat.sale{
-    background: rgb(126, 206, 244); 
-}
-.cabinSeat.sold{
-    background:white;
-    border:2px solid rgb(142, 1, 20);
-    position:relative;
-}
-.cabinSeat.sold::before, .cabinSeat.sold::after{
-    content:"";
-    position:absolute;
-    left:3px;
-    right:3px;
-    top:11px;
-    height:2px;
-    background:rgb(142, 1, 20);
-}
+.cabinSeat{ width:28px; height:28px; border-radius:6px; background:#e0e0e0; transition:.15s; cursor: pointer; }
+.cabinSeat.sale{ background: rgb(126, 206, 244); }
+.cabinSeat.sold{ background:white; border:2px solid rgb(142, 1, 20); position:relative; }
+.cabinSeat.sold::before, .cabinSeat.sold::after{ content:""; position:absolute; left:3px; right:3px; top:11px; height:2px; background:rgb(142, 1, 20); }
 .cabinSeat.sold::before{ transform:rotate(45deg); }
 .cabinSeat.sold::after{ transform:rotate(-45deg); }
 
+/* ================= RIGHT ================= */
+.right{ flex:1; padding:25px; display: flex; flex-direction: column; gap: 20px; overflow: hidden; background: #ffffff; }
+.card{ background: #ffffff; border: 1px solid rgb(215, 225, 230); border-radius: 12px; padding: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 18px; min-height: 0; }
+.cardHeader{ display:flex; justify-content:space-between; align-items:center; border-bottom: 3px solid rgb(126, 206, 244); padding-bottom: 10px; }
+.titleArea { display: flex; align-items: center; gap: 12px; }
+.cardHeader h2{ color: rgb(48, 58, 60); font-size: 24px; font-weight: 900; }
+.priceBadge { font-size: 14px; font-weight: bold; color: rgb(17, 17, 17); background: #f5f5f5; padding: 3px 12px; border-radius: 6px; border: 1px solid rgb(192, 206, 209); }
+.priceBadge span { color: rgb(30, 144, 255); }
+.count{ background: rgb(126, 206, 244); color: rgb(48, 58, 60); padding:6px 16px; border-radius:20px; font-weight:bold; font-size: 14px; }
+.noticeBox { padding: 12px; background: #f9fbfc; border-radius: 8px; font-size: 12px; color: rgb(48, 58, 60); line-height: 1.6; border: 1px solid rgb(192, 206, 209); }
+.noticeBox .warning-title { color: rgb(142, 1, 20); font-weight: bold; margin-bottom: 4px; }
 
-/* ================= RIGHT (Clean White UI) ================= */
-.right{
-    flex:1;
-    padding:25px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    overflow: hidden;
-    background: #ffffff;
-}
-.card{
-    background: #ffffff; 
-    border: 1px solid rgb(215, 225, 230);
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    min-height: 0;
-}
-.cardHeader{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom: 3px solid rgb(126, 206, 244); 
-    padding-bottom: 10px;
-}
-.titleArea {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.cardHeader h2{
-    color: rgb(48, 58, 60);
-    font-size: 24px;
-    font-weight: 900;
-}
-.priceBadge {
-    font-size: 14px;
-    font-weight: bold;
-    color: rgb(17, 17, 17);
-    background: #f5f5f5;
-    padding: 3px 12px;
-    border-radius: 6px;
-    border: 1px solid rgb(192, 206, 209);
-}
-.priceBadge span {
-    color: rgb(30, 144, 255);
-}
-.count{
-    background: rgb(126, 206, 244);
-    color: rgb(48, 58, 60); 
-    padding:6px 16px;
-    border-radius:20px;
-    font-weight:bold;
-    font-size: 14px;
-}
-.noticeBox {
-    padding: 12px;
-    background: #f9fbfc;
-    border-radius: 8px;
-    font-size: 12px;
-    color: rgb(48, 58, 60);
-    line-height: 1.6;
-    border: 1px solid rgb(192, 206, 209);
-}
-.noticeBox .warning-title {
-    color: rgb(142, 1, 20);
-    font-weight: bold;
-    margin-bottom: 4px;
-}
+.benchGridContainer { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.benchRow { display: flex; align-items: center; justify-content: center; width: 100%; gap: 10px; }
+.benchSide { display: flex; gap: 8px; flex: 1; }
+.benchSide.leftSide { justify-content: flex-end; }
+.benchSide.rightSide { justify-content: flex-start; }
+.benchCenterNo { width: 50px; text-align: center; font-size: 26px; font-weight: 800; color: rgb(48, 58, 60); user-select: none; }
+.emptyPlaceholder { flex: 1; }
 
-/* ================= 벤치마킹 구조 ================= */
-.benchGridContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-}
-.benchRow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 10px;
-}
-.benchSide {
-    display: flex;
-    gap: 8px;
-    flex: 1;
-}
-.benchSide.leftSide {
-    justify-content: flex-end;
-}
-.benchSide.rightSide {
-    justify-content: flex-start;
-}
-.benchCenterNo {
-    width: 50px;
-    text-align: center;
-    font-size: 26px;
-    font-weight: 800;
-    color: rgb(48, 58, 60);
-    user-select: none;
-}
-.emptyPlaceholder {
-    flex: 1;
-}
-
-/* 💺 PC버전 전체화면 시 좌석 타일 크기 및 찌그러짐 현상 해결 */
 .seatTile {
-    flex: 1;
-    max-width: 120px;        /* 가로 최대 크기 확장 */
-    min-height: 65px;        /* 세로 최소 크기를 지정하여 납작함 방지 */
-    aspect-ratio: 1.3 / 1;   /* PC화면에 맞게 도톰한 비율로 조정 */
-    border-radius: 8px;
-    background: rgb(126, 206, 244); 
-    color: rgb(48, 58, 60); 
-    border: 1px solid rgb(96, 176, 214);
-    cursor: pointer;
-    transition: transform 0.1s ease, background 0.15s;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    box-shadow: 0 2px 6px rgba(126,206,244,0.2);
+    flex: 1; max-width: 120px; min-height: 65px; aspect-ratio: 1.3 / 1; border-radius: 8px;
+    background: rgb(126, 206, 244); color: rgb(48, 58, 60); border: 1px solid rgb(96, 176, 214);
+    cursor: pointer; transition: transform 0.1s ease, background 0.15s; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; box-shadow: 0 2px 6px rgba(126,206,244,0.2);
 }
 .seatTile:active { transform: scale(0.94); }
 .seatTile .icon { font-size: 16px; margin-bottom: 3px; opacity: 0.9; }
 .seatTile .seatNo { font-size: 18px; font-weight: 900; line-height: 1; }
-
-.seatTile.sold {
-    background: rgb(158, 162, 161);
-    color: rgba(255,255,255,0.3);
-    border: 1px solid rgb(86, 90, 91);
-    box-shadow: none;
-}
-.seatTile.sold::before, .seatTile.sold::after {
-    content: "";
-    position: absolute;
-    width: 75%;
-    height: 3px;
-    background: rgb(142, 1, 20);
-    top: 50%;
-    left: 12.5%;
-}
+.seatTile.sold { background: rgb(158, 162, 161); color: rgba(255,255,255,0.3); border: 1px solid rgb(86, 90, 91); box-shadow: none; }
+.seatTile.sold::before, .seatTile.sold::after { content: ""; position: absolute; width: 75%; height: 3px; background: rgb(142, 1, 20); top: 50%; left: 12.5%; }
 .seatTile.sold::before { transform: rotate(45deg); }
 .seatTile.sold::after { transform: rotate(-45deg); }
 
-/* ================= 관리자 ================= */
-#setting {
-    position:fixed;
-    right:25px;
-    bottom:25px;
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    border:none;
-    background: rgb(126, 206, 244);
-    color: rgb(48, 58, 60);
-    font-size:28px;
-    cursor:pointer;
-    box-shadow:0 6px 15px rgba(0,0,0,.15);
-    z-index:999;
-}
-#panel {
-    position:fixed;
-    top:80px;
-    right:-340px;
-    width:320px;
-    height:calc(100vh - 80px);
-    background:white;
-    transition:.25s;
-    padding:25px;
-    box-shadow:-5px 0 15px rgba(0,0,0,.15);
-    overflow:auto;
-    z-index:998;
-}
+#setting { position:fixed; right:25px; bottom:25px; width:60px; height:60px; border-radius:50%; border:none; background: rgb(126, 206, 244); color: rgb(48, 58, 60); font-size:28px; cursor:pointer; box-shadow:0 6px 15px rgba(0,0,0,.15); z-index:999; }
+#panel { position:fixed; top:80px; right:-340px; width:320px; height:calc(100vh - 80px); background:white; transition:.25s; padding:25px; box-shadow:-5px 0 15px rgba(0,0,0,.15); overflow:auto; z-index:998; }
 #panel.open{ right:0; }
 #panel h2{ color: rgb(48, 58, 60); margin-bottom:20px; }
 #panel label{ display:block; margin-bottom:18px; font-weight:bold; }
@@ -385,7 +130,6 @@ main{
 #save { background:rgb(48, 58, 60); }
 #reset { background:rgb(210, 0, 21); }
 
-/* ================= MOBILE / TABLET RESPONSIVE ================= */
 @media (max-width: 1024px) {
     main { flex-direction: column; height: calc(100vh - 70px); }
     header { height: 70px; padding: 10px 15px; }
@@ -397,19 +141,41 @@ main{
     .right { width: 100%; height: 100%; overflow-y: auto; padding: 15px; padding-bottom: 80px; }
     .card { padding: 16px; }
     .benchCenterNo { font-size: 20px; width: 35px; }
-    
-    /* 모바일 타일 최적화 */
-    .seatTile { 
-        max-height: none; 
-        min-height: 48px;     /* 모바일 터치 영역 확보를 위한 높이 */
-        aspect-ratio: auto;   /* 모바일은 정해진 그리드 레이아웃 유연하게 대응 */
+    .seatTile { min-height: 48px; aspect-ratio: auto; }
+    .seatTile .icon { display: none !important; }
+    .seatTile .seatNo { font-size: 15px; }
+}
+
+/* ================= 🖨️ 인쇄 전용 스타일 시트 ================= */
+@media print {
+    body, main {
+        position: static !important;
+        overflow: visible !important;
+        height: auto !important;
+        background: #fff !important;
     }
-    /* 모바일 버전에서 좌석 아이콘 삭제 */
-    .seatTile .icon { 
-        display: none !important; 
+    header, #setting, #panel, .print-btn, .noticeBox {
+        display: none !important; /* 인쇄 시 관리 버튼 및 안내 박스 숨김 */
     }
-    .seatTile .seatNo {
-        font-size: 15px;
+    main {
+        display: block !important;
+    }
+    .left {
+        display: none !important; /* 인쇄 용지에는 우측의 큰 바둑판 타일 배열만 나오도록 왼쪽 레이아웃 숨김 */
+    }
+    .right {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+    .card {
+        border: 2px solid #000 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 30px;
+    }
+    .seatTile {
+        -webkit-print-color-adjust: exact !important; /* 브라우저 인쇄 시 배경 색상 강제 유지 */
+        print-color-adjust: exact !important;
     }
 }
 </style>
@@ -422,22 +188,12 @@ main{
         <span class="sub-title">지정좌석 구매</span>
     </div>
     <div class="flight">
-        <div>
-            <label>Flight</label>
-            <span id="flightNo">ZE536</span>
-        </div>
-        <div>
-            <label>Route</label>
-            <span id="route">MDC → ICN</span>
-        </div>
-        <div>
-            <label>Aircraft</label>
-            <span id="aircraft">B737-8</span>
-        </div>
-        <div>
-            <label>Time</label>
-            <span id="clock">00:00:00</span>
-        </div>
+        <div><label>Flight</label><span id="flightNo">ZE536</span></div>
+        <div><label>Route</label><span id="route">MDC → ICN</span></div>
+        <div><label>Aircraft</label><span id="aircraft">B737-8</span></div>
+        <div><label>Time</label><span id="clock">00:00:00</span></div>
+        <!-- 인쇄 버튼 -->
+        <button class="print-btn" onclick="window.print()">🖨️ 현황판 인쇄</button>
     </div>
 </header>
 
@@ -445,16 +201,8 @@ main{
     <div class="left">
         <h2>Cabin Layout</h2>
         <div class="airplane-body">
-            <div class="cockpit">
-                <div class="cockpit-window left-w"></div>
-                <div class="cockpit-window right-w"></div>
-            </div>
-
-            <div class="headerSeat">
-                <div>A</div><div>B</div><div>C</div>
-                <div></div>
-                <div>D</div><div>E</div><div>F</div>
-            </div>
+            <div class="cockpit"><div class="cockpit-window left-w"></div><div class="cockpit-window right-w"></div></div>
+            <div class="headerSeat"><div>A</div><div>B</div><div>C</div><div></div><div>D</div><div>E</div><div>F</div></div>
             <div id="seatMap"></div>
         </div>
     </div>
@@ -482,9 +230,9 @@ main{
             <div class="benchGridContainer" id="exitArea"></div>
              
             <div class="noticeBox">
-                <div>• <strong>15열 좌석</strong>은 비상 상황 시 탈출 동선 확보를 위해 <strong>등받이가 고정</strong>되어 후방 리클라이닝이 불가합니다.</div>
+                <div>• <strong>15열 좌석</strong>은 등받이가 고정되어 리클라이닝이 불가합니다.</div>
                 <div class="warning-title" style="margin-top: 4px;">• 비상구 좌석 지정 불가 고객 (항공안전법 규정)</div>
-                <div>노약자, 임산부, 유아/소아 동반 고객, 만 15세 미만 고객, 반려동물을 동반한 고객 또는 비상 상황 시 승무원의 지시에 따라 신속한 대피 도우미 역할 수행이 어렵거나 한국어/영어 의사소통이 불가한 고객</div>
+                <div>노약자, 임산부, 소아 동반, 만 15세 미만, 한국어/영어 소통 불가 고객 등</div>
             </div>
         </div>
     </div>
@@ -494,8 +242,6 @@ main{
 
 <div id="panel">
     <h2>관리자 패널</h2>
-    <label>편명<input id="flightInput" value="ZE536" disabled style="background:#f0f0f0; color:#999;"></label>
-    <label>노선<input id="routeInput" value="MDC → ICN" disabled style="background:#f0f0f0; color:#999;"></label>
     <label>기종<input id="aircraftInput" value="B737-8"></label>
     <button id="save">정보 저장</button>
     <button id="reset">좌석 판매 초기화</button>
@@ -525,8 +271,7 @@ function updateClock(){
     const now = new Date();
     document.getElementById("clock").textContent = `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}:${String(now.getSeconds()).padStart(2,"0")}`;
 }
-setInterval(updateClock, 1000);
-updateClock();
+setInterval(updateClock, 1000); updateClock();
 
 function isSold(seat) { return seatState[seat] === true; }
 
@@ -534,7 +279,6 @@ function refresh() {
     document.getElementById("flightNo").textContent = infoState.flight;
     document.getElementById("route").textContent = infoState.route;
     document.getElementById("aircraft").textContent = infoState.aircraft;
-    
     drawCabin();
     drawBenchmarkedTiles();
 }
@@ -543,44 +287,22 @@ function drawCabin(){
     const seatMap = document.getElementById("seatMap");
     seatMap.innerHTML = "";
     for(let row=1; row<=32; row++){
-        const line = document.createElement("div");
-        line.className = "cabinRow";
-
+        const line = document.createElement("div"); line.className = "cabinRow";
         ["A","B","C"].forEach(l => line.appendChild(createCabinSeat(row+l)));
-        
-        const no = document.createElement("div");
-        no.className = "rowNo"; no.textContent = row; 
-        line.appendChild(no);
-        
-        if(row !== 1){
-            ["D","E","F"].forEach(l => line.appendChild(createCabinSeat(row+l)));
-        } else {
-            for(let i=0; i<3; i++) {
-                const emp = document.createElement("div");
-                emp.style.width = "28px"; line.appendChild(emp);
-            }
-        }
-
+        const no = document.createElement("div"); no.className = "rowNo"; no.textContent = row; line.appendChild(no);
+        if(row !== 1){ ["D","E","F"].forEach(l => line.appendChild(createCabinSeat(row+l))); } 
+        else { for(let i=0; i<3; i++) { const emp = document.createElement("div"); emp.style.width = "28px"; line.appendChild(emp); } }
         if(row === 15 || row === 16) {
-            const leftGate = document.createElement("div");
-            leftGate.className = "exit-gate left-gate";
-            leftGate.textContent = "← EXIT ⚠️";
-            
-            const rightGate = document.createElement("div");
-            rightGate.className = "exit-gate right-gate";
-            rightGate.textContent = "⚠️ EXIT →";
-            
-            line.appendChild(leftGate);
-            line.appendChild(rightGate);
+            const leftGate = document.createElement("div"); leftGate.className = "exit-gate left-gate"; leftGate.textContent = "← EXIT ⚠️";
+            const rightGate = document.createElement("div"); rightGate.className = "exit-gate right-gate"; rightGate.textContent = "⚠️ EXIT →";
+            line.appendChild(leftGate); line.appendChild(rightGate);
         }
-
         seatMap.appendChild(line);
     }
 }
 
 function createCabinSeat(name){
-    const seat = document.createElement("div");
-    seat.className = "cabinSeat";
+    const seat = document.createElement("div"); seat.className = "cabinSeat";
     if(SALE_SEATS.includes(name)){
         seat.classList.add("sale");
         if(isSold(name)){ seat.classList.remove("sale"); seat.classList.add("sold"); }
@@ -590,41 +312,32 @@ function createCabinSeat(name){
 }
 
 function drawBenchmarkedTiles() {
-    const frontArea = document.getElementById("frontArea");
-    const exitArea = document.getElementById("exitArea");
-    frontArea.innerHTML = "";
-    exitArea.innerHTML = "";
-    
+    const frontArea = document.getElementById("frontArea"); const exitArea = document.getElementById("exitArea");
+    frontArea.innerHTML = ""; exitArea.innerHTML = "";
     let frontSold = 0, exitSold = 0;
 
-    const row1 = document.createElement("div");
-    row1.className = "benchRow";
+    const row1 = document.createElement("div"); row1.className = "benchRow";
     const r1Left = document.createElement("div"); r1Left.className = "benchSide leftSide";
     ["1A","1B","1C"].forEach(n => { r1Left.appendChild(makeTile(n)); if(isSold(n)) frontSold++; });
     const r1Center = document.createElement("div"); r1Center.className = "benchCenterNo"; r1Center.textContent = "1";
     const r1Right = document.createElement("div"); r1Right.className = "benchSide rightSide emptyPlaceholder";
-    row1.appendChild(r1Left); row1.appendChild(r1Center); row1.appendChild(r1Right);
-    frontArea.appendChild(row1);
+    row1.appendChild(r1Left); row1.appendChild(r1Center); row1.appendChild(r1Right); frontArea.appendChild(row1);
 
-    const row2 = document.createElement("div");
-    row2.className = "benchRow";
+    const row2 = document.createElement("div"); row2.className = "benchRow";
     const r2Left = document.createElement("div"); r2Left.className = "benchSide leftSide emptyPlaceholder";
     const r2Center = document.createElement("div"); r2Center.className = "benchCenterNo"; r2Center.textContent = "2";
     const r2Right = document.createElement("div"); r2Right.className = "benchSide rightSide";
     ["2D","2E","2F"].forEach(n => { r2Right.appendChild(makeTile(n)); if(isSold(n)) frontSold++; });
-    row2.appendChild(r2Left); row2.appendChild(r2Center); row2.appendChild(r2Right);
-    frontArea.appendChild(row2);
+    row2.appendChild(r2Left); row2.appendChild(r2Center); row2.appendChild(r2Right); frontArea.appendChild(row2);
 
     [15, 16].forEach(rNum => {
-        const eRow = document.createElement("div");
-        eRow.className = "benchRow";
+        const eRow = document.createElement("div"); eRow.className = "benchRow";
         const eLeft = document.createElement("div"); eLeft.className = "benchSide leftSide";
         ["A","B","C"].forEach(l => { const n = rNum+l; eLeft.appendChild(makeTile(n)); if(isSold(n)) exitSold++; });
         const eCenter = document.createElement("div"); eCenter.className = "benchCenterNo"; eCenter.textContent = rNum;
         const eRight = document.createElement("div"); eRight.className = "benchSide rightSide";
         ["D","E","F"].forEach(l => { const n = rNum+l; eRight.appendChild(makeTile(n)); if(isSold(n)) exitSold++; });
-        eRow.appendChild(eLeft); eRow.appendChild(eCenter); eRow.appendChild(eRight);
-        exitArea.appendChild(eRow);
+        eRow.appendChild(eLeft); eRow.appendChild(eCenter); eRow.appendChild(eRight); exitArea.appendChild(eRow);
     });
 
     document.getElementById("frontCount").textContent = `${FRONT_SEATS.length - frontSold} / ${FRONT_SEATS.length}`;
@@ -632,15 +345,9 @@ function drawBenchmarkedTiles() {
 }
 
 function makeTile(name){
-    const btn = document.createElement("button");
-    btn.className = "seatTile";
-    if(isSold(name)) btn.classList.add("sold");
-
-    const icon = document.createElement("div");
-    icon.className = "icon"; icon.textContent = "💺";
-    const seatNo = document.createElement("div");
-    seatNo.className = "seatNo"; seatNo.textContent = name;
-
+    const btn = document.createElement("button"); btn.className = "seatTile"; if(isSold(name)) btn.classList.add("sold");
+    const icon = document.createElement("div"); icon.className = "icon"; icon.textContent = "💺";
+    const seatNo = document.createElement("div"); seatNo.className = "seatNo"; seatNo.textContent = name;
     btn.appendChild(icon); btn.appendChild(seatNo);
     btn.onclick = (e) => { e.preventDefault(); toggleSeat(name); };
     return btn;
@@ -652,8 +359,7 @@ function toggleSeat(name) {
     refresh();
 }
 
-const settingBtn = document.getElementById("setting");
-const panel = document.getElementById("panel");
+const settingBtn = document.getElementById("setting"); const panel = document.getElementById("panel");
 settingBtn.onclick = (e) => { e.stopPropagation(); panel.classList.toggle("open"); };
 document.onclick = (e) => { if(!panel.contains(e.target) && e.target !== settingBtn) panel.classList.remove("open"); };
 
