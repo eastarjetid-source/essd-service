@@ -83,30 +83,37 @@ main{ display:flex; height:calc(100vh - 80px); }
 
 /* ================= LEFT (Cabin Layout) ================= */
 .left{
-    width:35%; background:#f4f7f9; padding:30px 20px; border-right:1px solid rgb(192, 192, 192);
+    width:35%; background:#f4f7f9; padding:25px 20px; border-right:1px solid rgb(192, 192, 192);
     overflow:auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; align-items: center;
 }
-.left h2{ color:rgb(210, 0, 21); text-align:center; margin-bottom:25px; font-size: 20px; }
+.left h2{ color:rgb(210, 0, 21); text-align:center; margin-bottom:20px; font-size: 20px; }
+
+/* 🌟 하단 빈 공간 채우기 핵심: 내부 요소를 가득 채우기 위해 flex 레이아웃 도입 */
 .airplane-body {
     background: #ffffff; border: 3px solid rgb(158, 162, 161); border-top-left-radius: 120px 200px; border-top-right-radius: 120px 200px;
-    padding: 60px 25px 40px 25px; width: 100%; max-width: 400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    padding: 60px 25px 35px 25px; width: 100%; max-width: 400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    flex: 1; display: flex; flex-direction: column; min-height: 0;
 }
 .cockpit { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
 .cockpit-window { width: 35px; height: 14px; background: rgb(48, 58, 60); border-radius: 3px; }
 .cockpit-window.left-w { transform: skewY(-10deg); border-top-left-radius: 8px;}
 .cockpit-window.right-w { transform: skewY(10deg); border-top-right-radius: 8px;}
 .headerSeat{ display:grid; grid-template-columns: 32px 32px 32px 45px 32px 32px 32px; justify-content:center; gap:8px; margin-bottom:15px; font-weight:bold; text-align: center; color:rgb(48, 58, 60); font-size: 15px; }
-#seatMap{ display:flex; flex-direction:column; gap:8px; position: relative; }
+
+/* 🌟 기밀맵 영역이 부모 높이를 다 쓰도록 세로 정렬 지정 */
+#seatMap{ display:flex; flex-direction:column; gap:6px; position: relative; flex: 1; }
 .cabinRow{ display:grid; grid-template-columns: 32px 32px 32px 45px 32px 32px 32px; justify-content:center; align-items:center; gap:8px; position: relative; }
 .rowNo{ text-align:center; font-size:13px; font-weight:bold; color:rgb(86, 90, 91); background: #eef2f5; border-radius: 4px; padding: 4px 0; position: relative; }
 
+/* 🌟 스킵 라인이 남는 세로 공간을 유연하게 밀어내어 빈 틈을 채워줍니다 */
 .skip-row {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 40px;
-    height: 35px;
-    margin: 4px 0;
+    flex: 1; 
+    min-height: 40px;
+    margin: 8px 0;
     color: rgb(158, 162, 161);
     font-size: 18px;
     font-weight: bold;
@@ -132,35 +139,35 @@ main{ display:flex; height:calc(100vh - 80px); }
 .cabinSeat.sold::after{ transform:rotate(-45deg); }
 
 /* ================= RIGHT ================= */
-.right{ flex:1; padding:25px; display: flex; flex-direction: column; gap: 20px; overflow: hidden; background: #ffffff; }
-.card{ background: #ffffff; border: 1px solid rgb(215, 225, 230); border-radius: 12px; padding: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 18px; min-height: 0; }
-.cardHeader{ display:flex; justify-content:space-between; align-items:center; border-bottom: 3px solid rgb(126, 206, 244); padding-bottom: 10px; }
-.titleArea { display: flex; align-items: center; gap: 12px; }
-.cardHeader h2{ color: rgb(48, 58, 60); font-size: 24px; font-weight: 900; }
-.priceBadge { font-size: 14px; font-weight: bold; color: rgb(17, 17, 17); background: #f5f5f5; padding: 3px 12px; border-radius: 6px; border: 1px solid rgb(192, 206, 209); }
+.right{ flex:1; padding:20px; display: flex; flex-direction: column; gap: 15px; overflow: hidden; background: #ffffff; }
+.card{ background: #ffffff; border: 1px solid rgb(215, 225, 230); border-radius: 12px; padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 15px; min-height: 0; }
+.cardHeader{ display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid rgb(126, 206, 244); padding-bottom: 8px; }
+.titleArea { display: flex; align-items: center; gap: 10px; }
+.cardHeader h2{ color: rgb(48, 58, 60); font-size: 20px; font-weight: 800; }
+.priceBadge { font-size: 13px; font-weight: bold; color: rgb(17, 17, 17); background: #f5f5f5; padding: 2px 10px; border-radius: 4px; border: 1px solid rgb(192, 206, 209); }
 .priceBadge span { color: rgb(30, 144, 255); }
-.count{ background: rgb(126, 206, 244); color: rgb(48, 58, 60); padding:6px 16px; border-radius:20px; font-weight:bold; font-size: 14px; }
-.noticeBox { padding: 12px; background: #f9fbfc; border-radius: 8px; font-size: 12px; color: rgb(48, 58, 60); line-height: 1.6; border: 1px solid rgb(192, 206, 209); }
-.noticeBox .warning-title { color: rgb(142, 1, 20); font-weight: bold; margin-bottom: 4px; }
+.count{ background: rgb(126, 206, 244); color: rgb(48, 58, 60); padding:4px 12px; border-radius:15px; font-weight:bold; font-size: 13px; }
+.noticeBox { padding: 10px; background: #f9fbfc; border-radius: 6px; font-size: 12px; color: rgb(48, 58, 60); line-height: 1.5; border: 1px solid rgb(192, 206, 209); }
+.noticeBox .warning-title { color: rgb(142, 1, 20); font-weight: bold; margin-bottom: 2px; }
 
-.benchGridContainer { display: flex; flex-direction: column; gap: 12px; width: 100%; }
-.benchRow { display: flex; align-items: center; justify-content: center; width: 100%; gap: 10px; }
-.benchSide { display: flex; gap: 8px; flex: 1; }
+.benchGridContainer { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.benchRow { display: flex; align-items: center; justify-content: center; width: 100%; gap: 8px; }
+.benchSide { display: flex; gap: 6px; flex: 1; }
 .benchSide.leftSide { justify-content: flex-end; }
 .benchSide.rightSide { justify-content: flex-start; }
-.benchCenterNo { width: 50px; text-align: center; font-size: 26px; font-weight: 800; color: rgb(48, 58, 60); user-select: none; }
+.benchCenterNo { width: 40px; text-align: center; font-size: 20px; font-weight: 800; color: rgb(48, 58, 60); user-select: none; }
 .emptyPlaceholder { flex: 1; }
 
 .seatTile {
-    flex: 1; max-width: 120px; min-height: 65px; aspect-ratio: 1.3 / 1; border-radius: 8px;
+    flex: 1; max-width: 90px; min-height: 52px; aspect-ratio: 1.4 / 1; border-radius: 6px;
     background: rgb(126, 206, 244); color: rgb(48, 58, 60); border: 1px solid rgb(96, 176, 214);
-    cursor: pointer; transition: transform 0.1s ease, background 0.15s; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; box-shadow: 0 2px 6px rgba(126,206,244,0.2);
+    cursor: pointer; transition: transform 0.1s ease, background 0.15s; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; box-shadow: 0 2px 5px rgba(126,206,244,0.15);
 }
 .seatTile:active { transform: scale(0.94); }
-.seatTile .icon { font-size: 16px; margin-bottom: 3px; opacity: 0.9; }
-.seatTile .seatNo { font-size: 18px; font-weight: 900; line-height: 1; }
+.seatTile .icon { font-size: 14px; margin-bottom: 2px; opacity: 0.9; }
+.seatTile .seatNo { font-size: 15px; font-weight: bold; line-height: 1; }
 .seatTile.sold { background: rgb(158, 162, 161); color: rgba(255,255,255,0.3); border: 1px solid rgb(86, 90, 91); box-shadow: none; }
-.seatTile.sold::before, .seatTile.sold::after { content: ""; position: absolute; width: 75%; height: 3px; background: rgb(142, 1, 20); top: 50%; left: 12.5%; }
+.seatTile.sold::before, .seatTile.sold::after { content: ""; position: absolute; width: 75%; height: 2px; background: rgb(142, 1, 20); top: 50%; left: 12.5%; }
 .seatTile.sold::before { transform: rotate(45deg); }
 .seatTile.sold::after { transform: rotate(-45deg); }
 
@@ -201,16 +208,16 @@ main{ display:flex; height:calc(100vh - 80px); }
     main.view-tiles .right { display: flex !important; }
 
     .card { padding: 16px; }
-    .benchCenterNo { font-size: 20px; width: 35px; }
-    .seatTile { min-height: 48px; aspect-ratio: auto; }
+    .benchCenterNo { font-size: 18px; width: 35px; }
+    .seatTile { min-height: 45px; aspect-ratio: auto; }
     .seatTile .icon { display: none !important; }
-    .seatTile .seatNo { font-size: 15px; }
+    .seatTile .seatNo { font-size: 14px; }
 }
 
-/* ================= 🖨️ PERFECT PRINT OPTIMIZATION (EMPTY SPACE ELIMINATED) ================= */
+/* ================= 🖨️ PERFECT PRINT OPTIMIZATION (LEFT SIDE HOLE ELIMINATED) ================= */
 @page {
     size: landscape; 
-    margin: 4mm 6mm; 
+    margin: 5mm 7mm; 
 }
 
 @media print {
@@ -221,7 +228,7 @@ main{ display:flex; height:calc(100vh - 80px); }
         position: static !important;
     }
     body {
-        zoom: 0.90 !important; /* 이미지 대비 축소 비율 최적화 */
+        zoom: 0.94 !important; 
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         background: #ffffff !important;
@@ -241,91 +248,77 @@ main{ display:flex; height:calc(100vh - 80px); }
         width: 100% !important;
     }
     
+    /* 왼쪽 기체 구조 채우기 스케일 조율 */
     .left {
         display: flex !important; 
-        width: 33% !important; /* 왼쪽 폭을 슬림하게 고정 */
+        width: 35% !important; 
         height: 100% !important;
         background: #f4f7f9 !important;
-        padding: 10px 10px !important;
+        padding: 12px 15px !important;
         border-right: 1px solid rgb(192, 192, 192) !important;
         overflow: visible !important;
     }
-    .left h2 { margin-bottom: 8px !important; font-size: 15px !important; }
+    .left h2 { margin-bottom: 12px !important; font-size: 16px !important; }
     
+    /* 🌟 인쇄창 크기에 맞춰 세로로 완전히 가득 차도록 고정 */
     .airplane-body {
-        max-width: 255px !important;
-        padding: 35px 10px 15px 10px !important;
-        border-width: 2px !important;
+        max-width: 290px !important;
+        padding: 40px 15px 25px 15px !important;
+        border-width: 2.5px !important;
+        flex: 1 !important; 
     }
-    .cockpit { top: 12px !important; }
-    .cockpit-window { width: 28px !important; height: 10px !important; }
+    .cockpit { top: 14px !important; }
+    .cockpit-window { width: 30px !important; height: 11px !important; }
     
-    #seatMap { gap: 2.5px !important; }
-    .cabinRow { gap: 4px !important; grid-template-columns: 21px 21px 21px 28px 21px 21px 21px !important;}
-    .cabinSeat { width: 21px !important; height: 21px !important; border-radius: 4px !important; }
-    .cabinSeat.sold::before, .cabinSeat.sold::after { top: 9px !important; height: 1.5px !important; left: 2px !important; right: 2px !important; }
+    #seatMap { gap: 4px !important; flex: 1 !important; }
+    .cabinRow { gap: 6px !important; grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important;}
+    .cabinSeat { width: 24px !important; height: 24px !important; border-radius: 5px !important; }
+    .cabinSeat.sold::before, .cabinSeat.sold::after { top: 10px !important; height: 1.5px !important; left: 3px !important; right: 3px !important; }
     
-    .rowNo { font-size: 9.5px !important; padding: 2px 0 !important; }
-    .headerSeat { grid-template-columns: 21px 21px 21px 28px 21px 21px 21px !important; gap: 4px !important; font-size: 12px !important; margin-bottom: 5px !important; }
+    .rowNo { font-size: 11px !important; padding: 2px 0 !important; }
+    .headerSeat { grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important; gap: 6px !important; font-size: 13px !important; margin-bottom: 8px !important; }
     
-    .skip-row { height: 26px !important; font-size: 14px !important; gap: 25px !important; }
-    .skip-line { font-size: 10px !important; }
+    /* 🌟 하단 여백의 핵심인 Skip 라인이 남은 공간을 완전히 점유하여 32열을 바닥으로 밀어내게 유도 */
+    .skip-row { 
+        flex: 1 !important; 
+        height: auto !important;
+        margin: 10px 0 !important; 
+        font-size: 15px !important; 
+        gap: 30px !important; 
+    }
+    .skip-line { font-size: 11px !important; }
 
-    .exit-gate { font-size: 8.5px !important; font-weight: 900 !important; }
-    .exit-gate.left-gate { left: -42px !important; } 
-    .exit-gate.right-gate { right: -42px !important; }
+    .exit-gate { font-size: 9px !important; font-weight: 900 !important; }
+    .exit-gate.left-gate { left: -48px !important; } 
+    .exit-gate.right-gate { right: -48px !important; }
 
-    /* 📊 오른쪽 타일 영역: 여백 극복 스케일 업 대폭 강화 */
+    /* 원래 완벽했던 우측 레이아웃 상태 유지 */
     .right {
         display: flex !important;
-        width: 67% !important; /* 오른쪽 너비 확장 */
+        width: 65% !important;
         height: 100% !important;
-        padding: 0px 0px 0px 15px !important;
+        padding: 12px 15px !important;
         overflow: visible !important;
         flex-direction: column !important;
-        gap: 12px !important; /* 카드 간격 최적 확장 */
+        gap: 12px !important;
     }
     .card {
         border: 1px solid rgb(215, 225, 230) !important;
         box-shadow: none !important;
-        padding: 20px 24px !important; /* 카드 내부 패딩 증가로 내부 밀도 보완 */
-        gap: 16px !important;
-        flex: 1 !important; 
+        padding: 16px !important;
+        gap: 12px !important;
     }
-    .cardHeader {
-        border-bottom: 3px solid rgb(126, 206, 244) !important;
-        padding-bottom: 6px !important;
-    }
-    .cardHeader h2 { font-size: 21px !important; }
-    .priceBadge { font-size: 13px !important; padding: 2px 10px !important; }
-    .count { font-size: 13px !important; padding: 4px 14px !important; }
-    
-    .benchGridContainer {
-        gap: 18px !important; /* 줄 간격 대폭 확장으로 수직 공간 점유 */
-        flex: 1 !important;
-        justify-content: center !important;
-    }
-    .benchRow { gap: 15px !important; }
-    .benchSide { gap: 14px !important; }
-    .benchCenterNo { font-size: 26px !important; width: 45px !important; }
-    
-    /* 타일 높이(min-height)를 과감하게 확장하여 이미지의 빈 공간 완전 정복 */
-    .seatTile {
-        min-height: 85px !important; 
-        max-width: 145px !important; 
-        border-radius: 10px !important;
-    }
-    .seatTile .icon { font-size: 18px !important; margin-bottom: 4px !important; display: block !important; }
-    .seatTile .seatNo { font-size: 21px !important; font-weight: 900 !important; }
-    .seatTile.sold::before, .seatTile.sold::after { height: 3.5px !important; }
-
-    .noticeBox {
-        display: block !important;
-        padding: 10px 15px !important;
-        margin-top: 5px !important;
-        font-size: 12px !important;
-        line-height: 1.5 !important;
-    }
+    .cardHeader h2 { font-size: 18px !important; }
+    .priceBadge { font-size: 12px !important; }
+    .count { font-size: 12px !important; }
+    .benchGridContainer { gap: 10px !important; }
+    .benchRow { gap: 8px !important; }
+    .benchSide { gap: 6px !important; }
+    .benchCenterNo { font-size: 20px !important; width: 40px !important; }
+    .seatTile { min-height: 52px !important; max-width: 90px !important; }
+    .seatTile .icon { font-size: 14px !important; display: block !important; }
+    .seatTile .seatNo { font-size: 15px !important; }
+    .noticeBox { font-size: 11px !important; padding: 8px !important; }
 }
 </style>
 </head>
