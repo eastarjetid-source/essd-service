@@ -149,10 +149,10 @@ main{ display:flex; height:calc(100vh - 80px); }
     .seatTile .seatNo { font-size: 15px; }
 }
 
-/* ================= 🖨️ 인쇄 최적화 및 90% 축소 세팅 ================= */
+/* ================= 🖨️ 인쇄 최적화 및 1페이지 강제 맞춤 세팅 ================= */
 @page {
-    size: landscape; /* 브라우저 인쇄 창 진입 시 가로 방향 기본 유도 */
-    margin: 10mm;    /* 종이 기본 여백 제거 */
+    size: landscape; 
+    margin: 8mm; /* 여백 최소화하여 여유공간 확보 */
 }
 
 @media print {
@@ -163,63 +163,76 @@ main{ display:flex; height:calc(100vh - 80px); }
         position: static !important;
     }
     body {
-        /* 크롬, 웨일 등 브라우저에서 90% 크기 축소 및 컬러 강제 지정 */
         zoom: 0.9 !important; 
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         background: #ffffff !important;
     }
-    .time-box, #setting, #panel, .print-btn, .noticeBox {
+    /* 안내 문구(.noticeBox)는 숨기지 않고 노출 유지 */
+    .time-box, #setting, #panel, .print-btn {
         display: none !important; 
     }
     header {
-        height: 70px !important;
+        height: 65px !important;
         background: rgb(210, 0, 21) !important;
     }
     main {
         display: flex !important; 
         flex-direction: row !important;
         height: auto !important;
-        page-break-inside: avoid !important; /* 페이지가 중간에 끊겨 넘어가는 현상 방지 */
+        page-break-inside: avoid !important;
         break-inside: avoid !important;
     }
     .left {
         display: flex !important; 
         width: 35% !important;
         background: #f4f7f9 !important;
-        padding: 10px !important;
+        padding: 8px !important;
     }
+    .left h2 { margin-bottom: 12px !important; font-size: 18px !important; }
     .airplane-body {
-        max-width: 280px !important;
-        padding: 25px 10px 15px 10px !important;
+        max-width: 270px !important;
+        padding: 20px 10px 15px 10px !important;
     }
-    #seatMap {
-        gap: 5px !important; /* 16열 잘림 방지를 위해 도면 내부 간격 미세 축소 */
-    }
-    .cabinRow {
-        gap: 5px !important;
-    }
+    #seatMap { gap: 4px !important; }
+    .cabinRow { gap: 4px !important; }
     .right {
         width: 65% !important;
-        padding: 10px 15px !important;
+        padding: 8px 15px !important;
         overflow: visible !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
     }
     .card {
         border: 1px solid rgb(215, 225, 230) !important;
         box-shadow: none !important;
-        padding: 15px !important;
-        margin-bottom: 12px !important;
+        padding: 10px 15px !important;
+        margin-bottom: 0px !important;
+        gap: 10px !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
     }
     .cardHeader {
         border-bottom: 3px solid rgb(126, 206, 244) !important;
+        padding-bottom: 5px !important;
     }
+    .cardHeader h2 { font-size: 20px !important; }
     .benchGridContainer {
-        gap: 8px !important; /* 우측 타일간 세로 간격 최적화 */
+        gap: 6px !important; 
     }
     .seatTile {
-        min-height: 55px !important; /* 잘림 방지를 위한 높이 리사이징 */
+        min-height: 48px !important; /* 높이를 살짝 줄여 하단 안내창 밀림 완전 방지 */
+    }
+    /* 📋 인쇄 전용 안내창 축소 스타일 정돈 */
+    .noticeBox {
+        display: block !important;
+        padding: 8px 12px !important;
+        margin-top: 5px !important;
+        font-size: 11px !important;
+        line-height: 1.4 !important;
+        background: #f9fbfc !important;
+        border: 1px solid rgb(192, 206, 209) !important;
     }
 }
 </style>
@@ -274,7 +287,7 @@ main{ display:flex; height:calc(100vh - 80px); }
              
             <div class="noticeBox">
                 <div>• <strong>15열 좌석</strong>은 등받이가 고정되어 리클라이닝이 불가합니다.</div>
-                <div class="warning-title" style="margin-top: 4px;">• 비상구 좌석 지정 불가 고객 (항공안전법 규정)</div>
+                <div class="warning-title" style="margin-top: 2px;">• 비상구 좌석 지정 불가 고객 (항공안전법 규정)</div>
                 <div>노약자, 임산부, 소아 동반, 만 15세 미만, 한국어/영어 소통 불가 고객 등</div>
             </div>
         </div>
