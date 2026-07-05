@@ -88,34 +88,34 @@ main{ display:flex; height:calc(100vh - 80px); }
 }
 .left h2{ color:rgb(210, 0, 21); text-align:center; margin-bottom:20px; font-size: 20px; }
 
-/* 🌟 하단 빈 공간 채우기 핵심: 내부 요소를 가득 채우기 위해 flex 레이아웃 도입 */
+/* 🌟 기체 내 좌석 뚫림 방지: 상하단 유연 분배 배치 적용 */
 .airplane-body {
     background: #ffffff; border: 3px solid rgb(158, 162, 161); border-top-left-radius: 120px 200px; border-top-right-radius: 120px 200px;
     padding: 60px 25px 35px 25px; width: 100%; max-width: 400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    flex: 1; display: flex; flex-direction: column; min-height: 0;
+    flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 0;
 }
 .cockpit { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
 .cockpit-window { width: 35px; height: 14px; background: rgb(48, 58, 60); border-radius: 3px; }
 .cockpit-window.left-w { transform: skewY(-10deg); border-top-left-radius: 8px;}
 .cockpit-window.right-w { transform: skewY(10deg); border-top-right-radius: 8px;}
-.headerSeat{ display:grid; grid-template-columns: 32px 32px 32px 45px 32px 32px 32px; justify-content:center; gap:8px; margin-bottom:15px; font-weight:bold; text-align: center; color:rgb(48, 58, 60); font-size: 15px; }
+.headerSeat{ display:grid; grid-template-columns: 32px 32px 32px 45px 32px 32px 32px; justify-content:center; gap:8px; margin-bottom:10px; font-weight:bold; text-align: center; color:rgb(48, 58, 60); font-size: 15px; }
 
-/* 🌟 기밀맵 영역이 부모 높이를 다 쓰도록 세로 정렬 지정 */
-#seatMap{ display:flex; flex-direction:column; gap:6px; position: relative; flex: 1; }
+/* 🌟 고정 높이 대신 내부 컨텐츠 비율대로 꽉 채우기 */
+#seatMap{ display:flex; flex-direction:column; justify-content: space-between; gap:4px; position: relative; flex: 1; min-height: 0; }
 .cabinRow{ display:grid; grid-template-columns: 32px 32px 32px 45px 32px 32px 32px; justify-content:center; align-items:center; gap:8px; position: relative; }
 .rowNo{ text-align:center; font-size:13px; font-weight:bold; color:rgb(86, 90, 91); background: #eef2f5; border-radius: 4px; padding: 4px 0; position: relative; }
 
-/* 🌟 스킵 라인이 남는 세로 공간을 유연하게 밀어내어 빈 틈을 채워줍니다 */
+/* 🌟 스킵 영역 가변 최소 높이 조정으로 뚫림 원천 차단 */
 .skip-row {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 40px;
     flex: 1; 
-    min-height: 40px;
-    margin: 8px 0;
+    min-height: 30px;
+    margin: 4px 0;
     color: rgb(158, 162, 161);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     position: relative;
 }
@@ -138,7 +138,7 @@ main{ display:flex; height:calc(100vh - 80px); }
 .cabinSeat.sold::before{ transform:rotate(45deg); }
 .cabinSeat.sold::after{ transform:rotate(-45deg); }
 
-/* ================= RIGHT ================= */
+/* ================= RIGHT (오른쪽 100% 꽉 채우기 공통 설정) ================= */
 .right{ flex:1; padding:20px; display: flex; flex-direction: column; gap: 15px; overflow: hidden; background: #ffffff; }
 .card{ background: #ffffff; border: 1px solid rgb(215, 225, 230); border-radius: 12px; padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 15px; min-height: 0; }
 .cardHeader{ display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid rgb(126, 206, 244); padding-bottom: 8px; }
@@ -151,21 +151,22 @@ main{ display:flex; height:calc(100vh - 80px); }
 .noticeBox .warning-title { color: rgb(142, 1, 20); font-weight: bold; margin-bottom: 2px; }
 
 .benchGridContainer { display: flex; flex-direction: column; gap: 10px; width: 100%; }
-.benchRow { display: flex; align-items: center; justify-content: center; width: 100%; gap: 8px; }
-.benchSide { display: flex; gap: 6px; flex: 1; }
+.benchRow { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 12px; }
+.benchSide { display: flex; gap: 10px; flex: 1; width: calc(50% - 25px); } /* 좌우 세트가 절반 균등 분할하도록 */
 .benchSide.leftSide { justify-content: flex-end; }
 .benchSide.rightSide { justify-content: flex-start; }
-.benchCenterNo { width: 40px; text-align: center; font-size: 20px; font-weight: 800; color: rgb(48, 58, 60); user-select: none; }
-.emptyPlaceholder { flex: 1; }
+.benchCenterNo { width: 50px; text-align: center; font-size: 20px; font-weight: 800; color: rgb(48, 58, 60); user-select: none; }
+.emptyPlaceholder { flex: 1; visibility: hidden; } /* 자리 채우기용 보이지 않는 안보이는 조각 */
 
+/* 🌟 와이드 화면 꽉 채우기: max-width 해제 및 flex 기반 크기 가변화 */
 .seatTile {
-    flex: 1; max-width: 90px; min-height: 52px; aspect-ratio: 1.4 / 1; border-radius: 6px;
+    flex: 1; width: 100%; min-height: 56px; aspect-ratio: 1.4 / 1; border-radius: 6px;
     background: rgb(126, 206, 244); color: rgb(48, 58, 60); border: 1px solid rgb(96, 176, 214);
     cursor: pointer; transition: transform 0.1s ease, background 0.15s; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; box-shadow: 0 2px 5px rgba(126,206,244,0.15);
 }
-.seatTile:active { transform: scale(0.94); }
+.seatTile:active { transform: scale(0.95); }
 .seatTile .icon { font-size: 14px; margin-bottom: 2px; opacity: 0.9; }
-.seatTile .seatNo { font-size: 15px; font-weight: bold; line-height: 1; }
+.seatTile .seatNo { font-size: 16px; font-weight: bold; line-height: 1; }
 .seatTile.sold { background: rgb(158, 162, 161); color: rgba(255,255,255,0.3); border: 1px solid rgb(86, 90, 91); box-shadow: none; }
 .seatTile.sold::before, .seatTile.sold::after { content: ""; position: absolute; width: 75%; height: 2px; background: rgb(142, 1, 20); top: 50%; left: 12.5%; }
 .seatTile.sold::before { transform: rotate(45deg); }
@@ -209,12 +210,12 @@ main{ display:flex; height:calc(100vh - 80px); }
 
     .card { padding: 16px; }
     .benchCenterNo { font-size: 18px; width: 35px; }
-    .seatTile { min-height: 45px; aspect-ratio: auto; }
+    .seatTile { min-height: 48px; aspect-ratio: auto; }
     .seatTile .icon { display: none !important; }
-    .seatTile .seatNo { font-size: 14px; }
+    .seatTile .seatNo { font-size: 15px; }
 }
 
-/* ================= 🖨️ PERFECT PRINT OPTIMIZATION (LEFT SIDE HOLE ELIMINATED) ================= */
+/* ================= 🖨️ PERFECT PRINT OPTIMIZATION ================= */
 @page {
     size: landscape; 
     margin: 5mm 7mm; 
@@ -248,43 +249,41 @@ main{ display:flex; height:calc(100vh - 80px); }
         width: 100% !important;
     }
     
-    /* 왼쪽 기체 구조 채우기 스케일 조율 */
     .left {
         display: flex !important; 
         width: 35% !important; 
         height: 100% !important;
         background: #f4f7f9 !important;
-        padding: 12px 15px !important;
+        padding: 10px 15px !important;
         border-right: 1px solid rgb(192, 192, 192) !important;
         overflow: visible !important;
     }
-    .left h2 { margin-bottom: 12px !important; font-size: 16px !important; }
+    .left h2 { margin-bottom: 10px !important; font-size: 16px !important; }
     
-    /* 🌟 인쇄창 크기에 맞춰 세로로 완전히 가득 차도록 고정 */
     .airplane-body {
         max-width: 290px !important;
         padding: 40px 15px 25px 15px !important;
         border-width: 2.5px !important;
         flex: 1 !important; 
+        justify-content: space-between !important;
     }
     .cockpit { top: 14px !important; }
     .cockpit-window { width: 30px !important; height: 11px !important; }
     
-    #seatMap { gap: 4px !important; flex: 1 !important; }
+    #seatMap { gap: 2px !important; flex: 1 !important; justify-content: space-between !important;}
     .cabinRow { gap: 6px !important; grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important;}
     .cabinSeat { width: 24px !important; height: 24px !important; border-radius: 5px !important; }
     .cabinSeat.sold::before, .cabinSeat.sold::after { top: 10px !important; height: 1.5px !important; left: 3px !important; right: 3px !important; }
     
     .rowNo { font-size: 11px !important; padding: 2px 0 !important; }
-    .headerSeat { grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important; gap: 6px !important; font-size: 13px !important; margin-bottom: 8px !important; }
+    .headerSeat { grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important; gap: 6px !important; font-size: 13px !important; margin-bottom: 4px !important; }
     
-    /* 🌟 하단 여백의 핵심인 Skip 라인이 남은 공간을 완전히 점유하여 32열을 바닥으로 밀어내게 유도 */
     .skip-row { 
         flex: 1 !important; 
-        height: auto !important;
-        margin: 10px 0 !important; 
-        font-size: 15px !important; 
-        gap: 30px !important; 
+        min-height: 25px !important;
+        margin: 2px 0 !important; 
+        font-size: 14px !important; 
+        gap: 20px !important; 
     }
     .skip-line { font-size: 11px !important; }
 
@@ -292,7 +291,7 @@ main{ display:flex; height:calc(100vh - 80px); }
     .exit-gate.left-gate { left: -48px !important; } 
     .exit-gate.right-gate { right: -48px !important; }
 
-    /* 원래 완벽했던 우측 레이아웃 상태 유지 */
+    /* 우측 레이아웃 인쇄도 시원하게 100% 반영 고수 */
     .right {
         display: flex !important;
         width: 65% !important;
@@ -311,13 +310,15 @@ main{ display:flex; height:calc(100vh - 80px); }
     .cardHeader h2 { font-size: 18px !important; }
     .priceBadge { font-size: 12px !important; }
     .count { font-size: 12px !important; }
-    .benchGridContainer { gap: 10px !important; }
-    .benchRow { gap: 8px !important; }
-    .benchSide { gap: 6px !important; }
-    .benchCenterNo { font-size: 20px !important; width: 40px !important; }
-    .seatTile { min-height: 52px !important; max-width: 90px !important; }
+    
+    .benchGridContainer { gap: 10px !important; width: 100% !important; }
+    .benchRow { gap: 12px !important; width: 100% !important; justify-content: space-between !important; }
+    .benchSide { gap: 10px !important; flex: 1 !important; width: calc(50% - 25px) !important;}
+    .benchCenterNo { font-size: 20px !important; width: 50px !important; }
+    
+    .seatTile { min-height: 56px !important; width: 100% !important; max-width: none !important; }
     .seatTile .icon { font-size: 14px !important; display: block !important; }
-    .seatTile .seatNo { font-size: 15px !important; }
+    .seatTile .seatNo { font-size: 16px !important; }
     .noticeBox { font-size: 11px !important; padding: 8px !important; }
 }
 </style>
@@ -348,8 +349,10 @@ main{ display:flex; height:calc(100vh - 80px); }
         <h2>Cabin Layout (1-32)</h2>
         <div class="airplane-body">
             <div class="cockpit"><div class="cockpit-window left-w"></div><div class="cockpit-window right-w"></div></div>
-            <div class="headerSeat"><div>A</div><div>B</div><div>C</div><div></div><div>D</div><div>E</div><div>F</div></div>
-            <div id="seatMap"></div>
+            <div>
+                <div class="headerSeat"><div>A</div><div>B</div><div>C</div><div></div><div>D</div><div>E</div><div>F</div></div>
+                <div id="seatMap"></div>
+            </div>
         </div>
     </div>
 
@@ -512,10 +515,12 @@ function drawBenchmarkedTiles() {
     ["1A","1B","1C"].forEach(n => { r1Left.appendChild(makeTile(n)); if(isSold(n)) frontSold++; });
     const r1Center = document.createElement("div"); r1Center.className = "benchCenterNo"; r1Center.textContent = "1";
     const r1Right = document.createElement("div"); r1Right.className = "benchSide rightSide emptyPlaceholder";
+    ["1D_emp","1E_emp","1F_emp"].forEach(() => { const dummy = document.createElement("div"); dummy.style.flex = "1"; r1Right.appendChild(dummy); });
     row1.appendChild(r1Left); row1.appendChild(r1Center); row1.appendChild(r1Right); frontArea.appendChild(row1);
 
     const row2 = document.createElement("div"); row2.className = "benchRow";
     const r2Left = document.createElement("div"); r2Left.className = "benchSide leftSide emptyPlaceholder";
+    ["2A_emp","2B_emp","2C_emp"].forEach(() => { const dummy = document.createElement("div"); dummy.style.flex = "1"; r2Left.appendChild(dummy); });
     const r2Center = document.createElement("div"); r2Center.className = "benchCenterNo"; r2Center.textContent = "2";
     const r2Right = document.createElement("div"); r2Right.className = "benchSide rightSide";
     ["2D","2E","2F"].forEach(n => { r2Right.appendChild(makeTile(n)); if(isSold(n)) frontSold++; });
