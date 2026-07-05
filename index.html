@@ -100,6 +100,27 @@ main{ display:flex; height:calc(100vh - 80px); }
 .cabinRow{ display:grid; grid-template-columns: 32px 32px 32px 45px 32px 32px 32px; justify-content:center; align-items:center; gap:8px; position: relative; }
 .rowNo{ text-align:center; font-size:13px; font-weight:bold; color:rgb(86, 90, 91); background: #eef2f5; border-radius: 4px; padding: 4px 0; position: relative; }
 
+/* 세로 물결 생략선 스타일 정의 */
+.skip-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    height: 35px;
+    margin: 4px 0;
+    color: rgb(158, 162, 161);
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+}
+.skip-line {
+    font-size: 14px;
+    letter-spacing: -2px;
+    transform: rotate(90deg); /* 세로 방향 연출 */
+    display: inline-block;
+    opacity: 0.6;
+}
+
 .exit-gate { position: absolute; top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: bold; color: rgb(142, 1, 20); white-space: nowrap; pointer-events: none; }
 .exit-gate.left-gate { left: -58px; } 
 .exit-gate.right-gate { right: -58px; } 
@@ -187,7 +208,7 @@ main{ display:flex; height:calc(100vh - 80px); }
     .seatTile .seatNo { font-size: 15px; }
 }
 
-/* ================= 🖨️ PERFECT 19-ROW PRINT OPTIMIZATION ================= */
+/* ================= 🖨️ PERFECT 32-ROW PRINT OPTIMIZATION (WITH SKIP) ================= */
 @page {
     size: landscape; 
     margin: 5mm 7mm; 
@@ -201,7 +222,7 @@ main{ display:flex; height:calc(100vh - 80px); }
         position: static !important;
     }
     body {
-        zoom: 0.88 !important; /* 19열 최적화 스케일업 */
+        zoom: 0.85 !important; 
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         background: #ffffff !important;
@@ -221,37 +242,41 @@ main{ display:flex; height:calc(100vh - 80px); }
         width: 100% !important;
     }
     
-    /* ✈️ 왼쪽 단축형 캐빈 도면 영역: 19열 기준 황금 밸런스 설정 (35% 할당) */
     .left {
         display: flex !important; 
         width: 35% !important;
         height: 100% !important;
         background: #f4f7f9 !important;
-        padding: 12px 15px !important;
+        padding: 10px 15px !important;
         border-right: 1px solid rgb(192, 192, 192) !important;
         overflow: visible !important;
     }
-    .left h2 { margin-bottom: 12px !important; font-size: 16px !important; }
+    .left h2 { margin-bottom: 10px !important; font-size: 16px !important; }
     
-    /* 19열까지 압축 해제된 크고 넓은 기체 디자인 구현 */
     .airplane-body {
-        max-width: 280px !important;
-        padding: 40px 12px 25px 12px !important;
+        max-width: 270px !important;
+        padding: 35px 12px 20px 12px !important;
         border-width: 2px !important;
     }
     .cockpit { top: 12px !important; }
     .cockpit-window { width: 30px !important; height: 11px !important; }
     
-    /* 19열 제한에 맞춰 각 좌석의 크기를 대폭 늘려 균형 유지 */
-    #seatMap { gap: 3px !important; }
-    .cabinRow { gap: 5px !important; grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important;}
-    .cabinSeat { width: 24px !important; height: 24px !important; border-radius: 4px !important; border-width: 1.5px !important; }
-    .cabinSeat.sold::before, .cabinSeat.sold::after { top: 10px !important; height: 1.5px !important; left: 2px !important; right: 2px !important; }
+    #seatMap { gap: 2.2px !important; }
+    .cabinRow { gap: 4.5px !important; grid-template-columns: 22px 22px 22px 30px 22px 22px 22px !important;}
+    .cabinSeat { width: 22px !important; height: 22px !important; border-radius: 4px !important; border-width: 1.5px !important; }
+    .cabinSeat.sold::before, .cabinSeat.sold::after { top: 9px !important; height: 1.5px !important; left: 2px !important; right: 2px !important; }
     
-    .rowNo { font-size: 11px !important; padding: 2px 0 !important; }
-    .headerSeat { grid-template-columns: 24px 24px 24px 32px 24px 24px 24px !important; gap: 5px !important; font-size: 13px !important; margin-bottom: 8px !important; }
+    .rowNo { font-size: 10px !important; padding: 2px 0 !important; }
+    .headerSeat { grid-template-columns: 22px 22px 22px 30px 22px 22px 22px !important; gap: 4.5px !important; font-size: 12px !important; margin-bottom: 6px !important; }
     
-    /* 15, 16열 비상구 텍스트 위치 완벽 조율 */
+    /* 인쇄 시 물결 생략선 스타일 정밀화 */
+    .skip-row {
+        height: 28px !important;
+        font-size: 15px !important;
+        gap: 30px !important;
+    }
+    .skip-line { font-size: 11px !important; }
+
     .exit-gate { font-size: 9px !important; font-weight: 900 !important; }
     .exit-gate.left-gate { left: -46px !important; } 
     .exit-gate.right-gate { right: -46px !important; }
@@ -331,7 +356,7 @@ main{ display:flex; height:calc(100vh - 80px); }
 
 <main class="view-tiles" id="mainContainer">
     <div class="left">
-        <h2>Cabin Layout (1-19)</h2>
+        <h2>Cabin Layout (1-32)</h2>
         <div class="airplane-body">
             <div class="cockpit"><div class="cockpit-window left-w"></div><div class="cockpit-window right-w"></div></div>
             <div class="headerSeat"><div>A</div><div>B</div><div>C</div><div></div><div>D</div><div>E</div><div>F</div></div>
@@ -439,20 +464,47 @@ function drawCabin(){
     const seatMap = document.getElementById("seatMap");
     seatMap.innerHTML = "";
     
-    // 유저의 요청대로 19열까지만 루프를 돌며 드로잉 및 출력하도록 제한
+    // 1단계: 1열부터 19열까지 정상적으로 렌더링
     for(let row=1; row<=19; row++){
-        const line = document.createElement("div"); line.className = "cabinRow";
-        ["A","B","C"].forEach(l => line.appendChild(createCabinSeat(row+l)));
-        const no = document.createElement("div"); no.className = "rowNo"; no.textContent = row; line.appendChild(no);
-        if(row !== 1){ ["D","E","F"].forEach(l => line.appendChild(createCabinSeat(row+l))); } 
-        else { for(let i=0; i<3; i++) { const emp = document.createElement("div"); emp.style.width = "32px"; line.appendChild(emp); } }
-        if(row === 15 || row === 16) {
-            const leftGate = document.createElement("div"); leftGate.className = "exit-gate left-gate"; leftGate.textContent = "← EXIT ⚠️";
-            const rightGate = document.createElement("div"); rightGate.className = "exit-gate right-gate"; rightGate.textContent = "⚠️ EXIT →";
-            line.appendChild(leftGate); line.appendChild(rightGate);
-        }
-        seatMap.appendChild(line);
+        seatMap.appendChild(generateRowMarkup(row));
     }
+    
+    // 2단계: 20~31열 구간을 생략하는 가로 방향의 세로 물결(~) 연출선 삽입
+    const skipDiv = document.createElement("div");
+    skipDiv.className = "skip-row";
+    skipDiv.innerHTML = `
+        <span class="skip-line">~~~</span>
+        <span style="font-size:12px; color:#bbb; font-weight:normal; letter-spacing:-0.5px;">20 - 31 Row Skip</span>
+        <span class="skip-line">~~~</span>
+    `;
+    seatMap.appendChild(skipDiv);
+    
+    // 3단계: 맨 마지막 32열을 하단에 단독 드로잉하여 정체성 고수
+    seatMap.appendChild(generateRowMarkup(32));
+}
+
+// 행 마크업 생성 헬퍼 함수
+function generateRowMarkup(row) {
+    const line = document.createElement("div"); 
+    line.className = "cabinRow";
+    
+    ["A","B","C"].forEach(l => line.appendChild(createCabinSeat(row+l)));
+    const no = document.createElement("div"); no.className = "rowNo"; no.textContent = row; line.appendChild(no);
+    
+    if(row !== 1){ 
+        ["D","E","F"].forEach(l => line.appendChild(createCabinSeat(row+l))); 
+    } else { 
+        for(let i=0; i<3; i++) { 
+            const emp = document.createElement("div"); emp.style.width = "32px"; line.appendChild(emp); 
+        } 
+    }
+    
+    if(row === 15 || row === 16) {
+        const leftGate = document.createElement("div"); leftGate.className = "exit-gate left-gate"; leftGate.textContent = "← EXIT ⚠️";
+        const rightGate = document.createElement("div"); rightGate.className = "exit-gate right-gate"; rightGate.textContent = "⚠️ EXIT →";
+        line.appendChild(leftGate); line.appendChild(rightGate);
+    }
+    return line;
 }
 
 function createCabinSeat(name){
